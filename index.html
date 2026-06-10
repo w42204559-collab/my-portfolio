@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Portfolio | 研究生设计作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8F9FA; /* 干净的浅灰白背景 */
+            --text-main: #222222;
+            --text-light: #666666;
+            --text-muted: #999999;
+            --accent-green: #7EBD7E; /* 鼠尾草绿 */
+            --accent-blue: #6B8EAD; /* 低饱和蓝 */
+            --accent-red: #C46D5E; /* 砖红色 */
+            --card-bg: #FFFFFF;
+            
+            --font-en: 'Inter', Helvetica, Arial, sans-serif;
+            --font-cn: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            --font-hand: 'Zhi Mang Xing', cursive;
+        }
+
+        /* 基础设置：专注宽屏桌面端，取消手机适配 */
+        body {
+            font-family: var(--font-cn);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-width: 1280px; /* 强制桌面端浏览宽度 */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, .en-text {
+            font-family: var(--font-en);
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* 顶部固定导航 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            box-sizing: border-box;
+            background: rgba(248, 249, 250, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            z-index: 900;
+        }
+
+        .logo { font-weight: 600; font-size: 18px; letter-spacing: 1px; color: var(--text-main); }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* 容器通用宽度 */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        /* Hero 区域 */
+        .hero {
+            padding-top: 200px;
+            padding-bottom: 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin: 0 0 16px 0;
+            color: var(--text-main);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent-green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 680px;
+        }
+
+        .hero-intro-text {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 2;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            max-width: 720px;
+        }
+
+        /* 个人信息卡片 */
+        .profile-card {
+            width: 320px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 320px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background: #eee;
+        }
+
+        .profile-bio {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.7;
+            padding: 0 10px 10px;
+        }
+
+        /* 装饰性手写体 */
+        .deco-hand {
+            font-family: var(--font-hand);
+            font-size: 28px;
+            color: var(--text-muted);
+            opacity: 0.5;
+            position: absolute;
+            margin-top: -40px;
+            margin-left: 20px;
+        }
+
+        /* 作品集区域 */
+        .portfolio-section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .category-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 宽屏三列布局 */
+            gap: 40px;
+        }
+
+        /* 作品卡片 */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-img-wrap {
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .card-img {
+            transform: scale(1.04);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-meta {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 12px 0;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-btn {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            border-bottom: 1px solid var(--text-main);
+            padding-bottom: 2px;
+            transition: opacity 0.3s;
+        }
+        .project-card:hover .card-btn { opacity: 0.7; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 80px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: #fff;
+            margin-top: 100px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+
+        /* ================= 详情弹窗 Modal 优化要求 ================= */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(245, 246, 247, 0.98);
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-container {
+            max-width: 1200px;
+            margin: 80px auto;
+            position: relative;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 40px;
+            right: 60px;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            z-index: 2100;
+            transition: transform 0.3s;
+        }
+        .close-btn:hover { transform: scale(1.1); }
+
+        .modal-content {
+            background: transparent;
+            width: 100%;
+            max-width: 1200px; /* 要求：最大宽度设置为 1080px 到 1280px */
+            margin: 0 auto;
+            padding-bottom: 100px;
+        }
+
+        /* 模态框内的排版规范 */
+        .modal-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 40px;
+        }
+
+        .modal-title {
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 20px 0;
+        }
+
+        /* 规定样式 */
+        .project-meta {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .project-intro {
+            max-width: 780px;
+            margin: 0 auto 40px;
+            font-size: 15px;
+            line-height: 1.9;
+            color: #555;
+            background: rgba(255,255,255,0.72);
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .project-section-title {
+            font-size: 22px;
+            margin: 60px auto 24px;
+            color: #222;
+            border-left: 4px solid #7EBD7E;
+            padding-left: 14px;
+            max-width: 1000px; /* 对齐图片主体 */
+            font-weight: 500;
+        }
+
+        .project-summary {
+            max-width: 780px;
+            margin: 60px auto;
+            padding: 28px;
+            border-radius: 18px;
+            background: #fff;
+            color: #555;
+            line-height: 1.9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+        .video-block {
+            width: 100%;
+            max-width: 1000px;
+            margin: 40px auto;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #111;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .video-block video {
+            width: 100%;
+            display: block;
+        }
+
+        .modal-gallery {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .modal img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            display: block;
+        }
+
+        .intro-block {
+            margin-bottom: 20px;
+        }
+        .intro-block strong { color: var(--text-main); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">PORTFOLIO.</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#works">Works</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </header>
+
+    <div class="container" id="home">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Design Portfolio</h1>
+                <div class="hero-subtitle">
+                    IP Design · Packaging Design · Product Design · UI/UX Design · Poster Design
+                </div>
+                <p class="hero-desc">
+                    研究生设计作品集，展示 IP 形象设计、文化包装设计、儿童产品系统设计、数字界面设计与生态议题海报设计。
+                </p>
+                
+                <div class="hero-intro-text">
+                    <span class="deco-hand">Overview</span>
+                    本作品集围绕文化转译、视觉叙事、产品系统与数字交互展开，包含 IP 形象设计、包装设计、儿童产品系统设计、小程序界面设计与生态议题海报设计。<br><br>
+                    作品通过 AI 辅助生成、视觉系统构建和场景化展示，探索设计在文化传播、产品体验和公共议题表达中的可能性。
+                </div>
+            </div>
+
+            <div class="profile-card" id="about">
+                <img src="images/profile.jpg" alt="Profile" class="profile-img">
+                <div class="profile-bio">
+                    <strong>设计专业研究生</strong><br><br>
+                    关注文化转译、视觉叙事、产品系统、数字交互与 AI 辅助设计方法。
+                </div>
+            </div>
+        </section>
+
+        <div id="works">
+            
+            <section class="portfolio-section">
+                <div class="category-title">01 / IP Character Design</div>
+                <div class="works-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="project-card" onclick="openModal('project1')">
+                        <div class="card-img-wrap">
+                            <img src="images/project1/cover.jpg" alt="龙宝 IP" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">IP Design / Trendy Toy</div>
+                            <h3 class="card-title">龙 IP 形象设计</h3>
+                            <p class="card-desc">《龙宝 Dragon Boy》是一个以中国龙文化为灵感的原创潮玩 IP 形象设计。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio-section">
+                <div class="category-title">02 / Packaging Design</div>
+                <div class="works-grid">
+                    <div class="project-card" onclick="openModal('project2')">
+                        <div class="card-img-wrap">
+                            <img src="images/project2/cover.jpg" alt="宁和礼包装" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">Packaging / Agricultural</div>
+                            <h3 class="card-title">宁和礼包装设计</h3>
+                            <p class="card-desc">《宁和礼》农产品礼盒包装设计，结合地方建筑与东方礼赠美学。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('project3')">
+                        <div class="card-img-wrap">
+                            <img src="images/project3/cover.jpg" alt="丝绸包装" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">Packaging / Cultural</div>
+                            <h3 class="card-title">丝绸礼盒包装设计</h3>
+                            <p class="card-desc">《触见东方》丝绸礼盒设计，表现丝绸产品的精致感和礼赠属性。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio-section">
+                <div class="category-title">03 / Product & Interaction Design</div>
+                <div class="works-grid">
+                    <div class="project-card" onclick="openModal('project4')">
+                        <div class="card-img-wrap">
+                            <img src="images/project4/cover1.jpg" alt="儿童产品" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">Product / System Design</div>
+                            <h3 class="card-title">儿童自然学习产品</h3>
+                            <p class="card-desc">《光芽 Grow Light》面向儿童学习场景的自然学习桌面产品系统设计。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openModal('project5')">
+                        <div class="card-img-wrap">
+                            <img src="images/project5/cover.jpg" alt="石窗小程序" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">UI/UX / Mini Program</div>
+                            <h3 class="card-title">石窗小程序设计</h3>
+                            <p class="card-desc">《石窗》文化导览小程序，探索地方文化的数字化传播方式。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio-section">
+                <div class="category-title">04 / Visual & Information Design</div>
+                <div class="works-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="project-card" onclick="openModal('project6')">
+                        <div class="card-img-wrap">
+                            <img src="images/project6/cover1.jpg" alt="海洋海报" class="card-img">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">Poster / Information</div>
+                            <h3 class="card-title">海洋海报设计</h3>
+                            <p class="card-desc">《蓝色幻象》蓝眼泪生态危机叙事海报设计，探讨自然奇观与生态预醒。</p>
+                            <span class="card-btn">View Project ➝</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <footer id="contact">
+        <p>© 2026 Designed & Handcrafted. Graduate Design Portfolio.</p>
+    </footer>
+
+    <div id="modal-project1" class="modal">
+        <div class="close-btn" onclick="closeModal('project1')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">IP Design / Character Design / Trendy Toy</div>
+                    <h2 class="modal-title">龙 IP 形象设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《龙宝 Dragon Boy》是一个以中国龙文化为灵感的原创潮玩 IP 形象设计。角色融合 Q 版儿童形象、龙头帽、东方童趣与国潮视觉语言，形成具有亲和力和收藏感的角色系统。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>龙是中国传统文化中的重要符号，象征守护、祥瑞与力量。本项目希望将传统龙文化转译为更年轻、更可爱、更适合潮玩传播的视觉形象。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“东方童趣 × 潮玩收藏 × 吉祥守护”为核心概念，通过角色三视图、表情系统、主题换装和周边应用，构建完整的 IP 视觉系统。</div>
+                </div>
+
+                <div class="video-block">
+                    <video autoplay muted loop playsinline controls>
+                        <source src="videos/ip-demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">角色主视觉</h3>
+                    <img src="images/project1/detail1.jpg" alt="detail">
+                    <img src="images/project1/detail2.jpg" alt="detail">
+                    <img src="images/project1/detail3.jpg" alt="detail">
+
+                    <h3 class="project-section-title">角色设定与三视图</h3>
+                    <img src="images/project1/detail4.jpg" alt="detail">
+                    <img src="images/project1/detail5.jpg" alt="detail">
+                    <img src="images/project1/detail6.jpg" alt="detail">
+
+                    <h3 class="project-section-title">造型延展</h3>
+                    <img src="images/project1/detail7.jpg" alt="detail">
+                    <img src="images/project1/detail8.jpg" alt="detail">
+                    <img src="images/project1/detail9.jpg" alt="detail">
+                    <img src="images/project1/detail10.jpg" alt="detail">
+                    <img src="images/project1/detail11.jpg" alt="detail">
+                    <img src="images/project1/detail12.jpg" alt="detail">
+
+                    <h3 class="project-section-title">表情系统</h3>
+                    <img src="images/project1/detail13.jpg" alt="detail">
+                    <img src="images/project1/detail14.jpg" alt="detail">
+
+                    <h3 class="project-section-title">周边应用</h3>
+                    <img src="images/project1/detail15.jpg" alt="detail">
+                    <img src="images/project1/detail16.jpg" alt="detail">
+                    <img src="images/project1/detail17.jpg" alt="detail">
+                    <img src="images/project1/detail18.jpg" alt="detail">
+                    <img src="images/project1/detail19.jpg" alt="detail">
+                    <img src="images/project1/detail20.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目探索了传统文化符号在当代潮玩语境下的转译方式，使角色既具有文化识别度，又具备年轻化传播和商业延展潜力。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project2" class="modal">
+        <div class="close-btn" onclick="closeModal('project2')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">Packaging Design / Agricultural Product / Gift Box</div>
+                    <h2 class="modal-title">宁和礼包装设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《宁和礼》是一个以地方农产品为主题的礼盒包装设计项目。包装视觉结合地方建筑、农产品图形、山水线描与东方礼赠美学，形成具有地域文化和礼赠属性的农产品包装系统。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>传统农产品包装常存在视觉同质化、礼品属性不足和地域文化表达较弱的问题。本项目希望通过包装系统提升农产品的品牌感和文化价值。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“地方物产 × 东方礼盒 × 线描叙事”为核心概念，将建筑、山水、农产品和礼赠场景融入包装视觉，增强产品的识别度和仪式感。</div>
+                </div>
+
+                <div class="video-block">
+                    <video autoplay muted loop playsinline controls>
+                        <source src="videos/shichuang-demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">礼盒主视觉</h3>
+                    <img src="images/project2/detail1.jpg" alt="detail">
+                    <img src="images/project2/detail2.jpg" alt="detail">
+
+                    <h3 class="project-section-title">礼盒结构与开盒</h3>
+                    <img src="images/project2/detail3.jpg" alt="detail">
+                    <img src="images/project2/detail4.jpg" alt="detail">
+
+                    <h3 class="project-section-title">内盒包装</h3>
+                    <img src="images/project2/detail5.jpg" alt="detail">
+                    <img src="images/project2/detail6.jpg" alt="detail">
+
+                    <h3 class="project-section-title">系列展示与应用</h3>
+                    <img src="images/project2/detail7.jpg" alt="detail">
+                    <img src="images/project2/detail8.jpg" alt="detail">
+                    <img src="images/project2/detail9.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目通过礼盒结构、系列内盒和视觉插画系统，建立了具有东方气质和地方文化表达的农产品礼盒包装方案。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project3" class="modal">
+        <div class="close-btn" onclick="closeModal('project3')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">Packaging Design / Cultural Product / Gift Box</div>
+                    <h2 class="modal-title">丝绸礼盒包装设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《触见东方》是一个以东方丝绸文化为主题的高端礼盒包装设计。作品通过柔和米白、浅金、织物纹理、山水线条与开盒结构，表现丝绸产品的精致感和礼赠属性。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>丝绸产品具有柔软、细腻和东方文化意味，但包装展示中常缺少触感、仪式感和空间层次。本项目希望通过礼盒结构与材质语言强化产品体验。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“触见东方”为核心概念，将东方山水、织物肌理和礼盒开合体验结合，营造柔和、安静、精致的视觉与触觉感受。</div>
+                </div>
+
+                <div class="video-block">
+                    <video autoplay muted loop playsinline controls>
+                        <source src="videos/sichou-demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">礼盒主视觉</h3>
+                    <img src="images/project3/detail1.jpg" alt="detail">
+                    <img src="images/project3/detail2.jpg" alt="detail">
+
+                    <h3 class="project-section-title">开盒展示</h3>
+                    <img src="images/project3/detail3.jpg" alt="detail">
+                    <img src="images/project3/detail4.jpg" alt="detail">
+                    <img src="images/project3/detail5.jpg" alt="detail">
+
+                    <h3 class="project-section-title">材质与细节</h3>
+                    <img src="images/project3/detail6.jpg" alt="detail">
+                    <img src="images/project3/detail7.jpg" alt="detail">
+                    <img src="images/project3/detail8.jpg" alt="detail">
+
+                    <h3 class="project-section-title">丝绸陈列</h3>
+                    <img src="images/project3/detail9.jpg" alt="detail">
+                    <img src="images/project3/detail10.jpg" alt="detail">
+                    <img src="images/project3/detail11.jpg" alt="detail">
+
+                    <h3 class="project-section-title">品牌延展</h3>
+                    <img src="images/project3/detail12.jpg" alt="detail">
+                    <img src="images/project3/detail13.jpg" alt="detail">
+                    <img src="images/project3/detail14.jpg" alt="detail">
+                    <img src="images/project3/detail15.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目通过包装结构、内部陈列和品牌延展，构建了具有东方美学和高端礼赠感的丝绸包装系统。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project4" class="modal">
+        <div class="close-btn" onclick="closeModal('project4')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">Product Design / System Design / Children Product</div>
+                    <h2 class="modal-title">儿童自然学习桌面产品设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《光芽 Grow Light》是一个面向儿童学习场景的自然学习桌面产品系统设计，包括植物加湿器、儿童学习护眼台灯和智能植物学习钟。项目通过空气湿度、护眼照明、时间管理与植物陪伴，为儿童创造健康、温暖、自然的学习环境。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>儿童学习桌面常面临光照不舒适、空气干燥、专注时间难管理和学习氛围单一等问题。本项目希望通过一组三件式桌面产品，构建更完整的自然学习陪伴系统。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“自然陪伴 × 健康学习 × 儿童友好”为核心概念，三件产品分别承担空气调节、护眼照明和专注管理功能，并通过统一的造型、色彩和交互语言形成系列感。</div>
+                </div>
+
+                <div class="video-block">
+                    <video autoplay muted loop playsinline controls>
+                        <source src="videos/chanping-demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">系列主视觉</h3>
+                    <img src="images/project4/cover2.jpg" alt="detail">
+                    <img src="images/project4/detail1.jpg" alt="detail">
+                    <img src="images/project4/detail2.jpg" alt="detail">
+
+                    <h3 class="project-section-title">三件产品系列总览</h3>
+                    <img src="images/project4/detail3.jpg" alt="detail">
+                    <img src="images/project4/detail4.jpg" alt="detail">
+                    <img src="images/project4/detail5.jpg" alt="detail">
+
+                    <h3 class="project-section-title">植物加湿器</h3>
+                    <img src="images/project4/detail6.jpg" alt="detail">
+                    <img src="images/project4/detail7.jpg" alt="detail">
+                    <img src="images/project4/detail8.jpg" alt="detail">
+                    <img src="images/project4/detail9.jpg" alt="detail">
+
+                    <h3 class="project-section-title">儿童护眼台灯</h3>
+                    <img src="images/project4/detail10.jpg" alt="detail">
+                    <img src="images/project4/detail11.jpg" alt="detail">
+                    <img src="images/project4/detail12.jpg" alt="detail">
+                    <img src="images/project4/detail13.jpg" alt="detail">
+
+                    <h3 class="project-section-title">智能植物学习钟</h3>
+                    <img src="images/project4/detail14.jpg" alt="detail">
+                    <img src="images/project4/detail15.jpg" alt="detail">
+                    <img src="images/project4/detail16.jpg" alt="detail">
+                    <img src="images/project4/detail17.jpg" alt="detail">
+
+                    <h3 class="project-section-title">结构与功能</h3>
+                    <img src="images/project4/detail18.jpg" alt="detail">
+                    <img src="images/project4/detail19.jpg" alt="detail">
+                    <img src="images/project4/detail20.jpg" alt="detail">
+                    <img src="images/project4/detail21.jpg" alt="detail">
+
+                    <h3 class="project-section-title">系统关系 / CMF / 交互</h3>
+                    <img src="images/project4/detail22.jpg" alt="detail">
+                    <img src="images/project4/detail23.jpg" alt="detail">
+                    <img src="images/project4/detail24.jpg" alt="detail">
+
+                    <h3 class="project-section-title">场景与品牌延展</h3>
+                    <img src="images/project4/detail25.jpg" alt="detail">
+                    <img src="images/project4/detail26.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目强调系统化产品设计，而不是将多个功能堆叠在一个产品中。通过统一的 CMF、圆角语言和场景化展示，形成具有现实可行性的儿童学习桌面产品系列。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project5" class="modal">
+        <div class="close-btn" onclick="closeModal('project5')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">UI/UX Design / Mini Program / Cultural Digital Design</div>
+                    <h2 class="modal-title">石窗小程序设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《石窗》是一个围绕地方石窗文化展开的文化导览小程序设计。项目通过移动端界面呈现石窗文化、建筑细节、路线导览和互动浏览体验，探索地方文化的数字化传播方式。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>地方传统建筑与石窗文化具有独特的审美和历史价值，但在大众传播中常缺少易理解、易浏览、易参与的数字化入口。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“文化导览 × 图文叙事 × 移动交互”为核心概念，通过首页、文化介绍、详情页面、路线浏览和视觉规范，构建完整的小程序体验流程。</div>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">项目概念与首页</h3>
+                    <img src="images/project5/detail1.jpg" alt="detail">
+                    <img src="images/project5/detail2.jpg" alt="detail">
+                    <img src="images/project5/detail3.jpg" alt="detail">
+
+                    <h3 class="project-section-title">功能架构与用户流程</h3>
+                    <img src="images/project5/detail4.jpg" alt="detail">
+                    <img src="images/project5/detail5.jpg" alt="detail">
+                    <img src="images/project5/detail6.jpg" alt="detail">
+
+                    <h3 class="project-section-title">核心页面 UI</h3>
+                    <img src="images/project5/detail7.jpg" alt="detail">
+                    <img src="images/project5/detail8.jpg" alt="detail">
+                    <img src="images/project5/detail9.jpg" alt="detail">
+                    <img src="images/project5/detail10.jpg" alt="detail">
+
+                    <h3 class="project-section-title">页面交互流程</h3>
+                    <img src="images/project5/detail11.jpg" alt="detail">
+                    <img src="images/project5/detail12.jpg" alt="detail">
+                    <img src="images/project5/detail13.jpg" alt="detail">
+
+                    <h3 class="project-section-title">视觉规范与样机展示</h3>
+                    <img src="images/project5/detail14.jpg" alt="detail">
+                    <img src="images/project5/detail15.jpg" alt="detail">
+                    <img src="images/project5/detail16.jpg" alt="detail">
+                    <img src="images/project5/detail17.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目将传统文化内容转化为移动端交互体验，使用户能够以更轻量、更直观的方式了解石窗文化。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-project6" class="modal">
+        <div class="close-btn" onclick="closeModal('project6')">×</div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="project-meta">Poster Design / Information Design / Environmental Visual Design</div>
+                    <h2 class="modal-title">海洋海报设计</h2>
+                </div>
+                
+                <div class="project-intro">
+                    <div class="intro-block"><strong>项目简介：</strong>《蓝色幻象 The Blue Illusion》是一个以“蓝眼泪”现象为切入点的生态议题海报设计项目。项目围绕“美丽 / 危机”的双重面孔展开，通过视觉叙事和信息设计，呈现蓝眼泪从浪漫自然奇观到海岸生态警讯的认知转变。</div>
+                    <div class="intro-block"><strong>设计背景：</strong>蓝眼泪常被大众作为浪漫景观观看和传播，但其背后也可能关联海水富营养化、藻类异常繁殖、溶解氧下降和生态系统失衡等问题。</div>
+                    <div class="intro-block"><strong>设计概念：</strong>以“你看到的是奇观，海洋发出的是警讯”为核心叙事，将蓝眼泪的梦幻视觉与海岸生态危机并置，形成美丽与危机的对照关系。</div>
+                </div>
+
+                <div class="modal-gallery">
+                    <h3 class="project-section-title">项目封面</h3>
+                    <img src="images/project6/cover2.jpg" alt="detail">
+                    <img src="images/project6/detail1.jpg" alt="detail">
+                    <img src="images/project6/detail2.jpg" alt="detail">
+
+                    <h3 class="project-section-title">美丽 / 危机概念</h3>
+                    <img src="images/project6/detail3.jpg" alt="detail">
+                    <img src="images/project6/detail4.jpg" alt="detail">
+
+                    <h3 class="project-section-title">海岸剖面信息图</h3>
+                    <img src="images/project6/detail5.jpg" alt="detail">
+                    <img src="images/project6/detail6.jpg" alt="detail">
+                    <img src="images/project6/detail7.jpg" alt="detail">
+
+                    <h3 class="project-section-title">系列海报</h3>
+                    <img src="images/project6/detail8.jpg" alt="detail">
+                    <img src="images/project6/detail9.jpg" alt="detail">
+                    <img src="images/project6/detail10.jpg" alt="detail">
+
+                    <h3 class="project-section-title">应用展示</h3>
+                    <img src="images/project6/detail11.jpg" alt="detail">
+                    <img src="images/project6/detail12.jpg" alt="detail">
+                </div>
+
+                <div class="project-summary">
+                    <strong>项目总结：</strong>该项目通过公益海报、视觉隐喻和信息可视化语言，引导观者从观看自然奇观转向理解海洋生态问题与修复行动。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(projectId) {
+            document.getElementById('modal-' + projectId).style.display = "block";
+            document.body.style.overflow = "hidden"; // 展开详情时禁止底背滑动
+        }
+        function closeModal(projectId) {
+            document.getElementById('modal-' + projectId).style.display = "none";
+            document.body.style.overflow = "auto";   // 关闭后恢复滚动
+        }
+        // 点击遮罩外部也可以关闭弹窗
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+    </script>
+</body>
+</html>
