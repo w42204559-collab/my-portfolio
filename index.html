@@ -1,902 +1,2314 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Portfolio | 研究生设计作品集</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F8F9FA; /* 干净的浅灰白背景 */
-            --text-main: #222222;
-            --text-light: #666666;
-            --text-muted: #999999;
-            --accent-green: #7EBD7E; /* 鼠尾草绿 */
-            --accent-blue: #6B8EAD; /* 低饱和蓝 */
-            --accent-red: #C46D5E; /* 砖红色 */
-            --card-bg: #FFFFFF;
-            
-            --font-en: 'Inter', Helvetica, Arial, sans-serif;
-            --font-cn: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-            --font-hand: 'Zhi Mang Xing', cursive;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0" />
+  <title>Design Portfolio | Graduate Portfolio</title>
 
-        /* 基础设置：专注宽屏桌面端，取消手机适配 */
-        body {
-            font-family: var(--font-cn);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            min-width: 1280px; /* 强制桌面端浏览宽度 */
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        h1, h2, h3, h4, h5, .en-text {
-            font-family: var(--font-en);
-        }
+  <style>
+    :root{
+      --bg:#f7f2e9;
+      --paper:#fffdf7;
+      --ink:#171512;
+      --muted:#746b60;
+      --line:rgba(23,21,18,.11);
+      --dark:#151310;
+      --gold:#B59A6A;
+      --shadow:0 24px 70px rgba(51,40,26,.10);
+      --font-en:'Inter', Helvetica, Arial, sans-serif;
+      --font-cn:'Noto Sans SC','Microsoft YaHei',sans-serif;
+    }
 
-        a { text-decoration: none; color: inherit; }
+    *{box-sizing:border-box}
 
-        /* 顶部固定导航 */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 60px;
-            box-sizing: border-box;
-            background: rgba(248, 249, 250, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-            z-index: 900;
-        }
+    html{scroll-behavior:smooth}
 
-        .logo { font-weight: 600; font-size: 18px; letter-spacing: 1px; color: var(--text-main); }
-        
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-        .nav-links a:hover { color: var(--text-main); }
+    body{
+      margin:0;
+      min-width:1280px;
+      font-family:var(--font-cn);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(181,154,106,.18), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(126,159,121,.16), transparent 28%),
+        var(--bg);
+      color:var(--ink);
+      overflow-x:hidden;
+      cursor:none;
+    }
 
-        /* 容器通用宽度 */
-        .container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 80px;
-        }
+    a,button,.project-card,.method-card,.media-card,.profile-card{cursor:none}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+    h1,h2,h3,h4{font-family:var(--font-en)}
 
-        /* Hero 区域 */
-        .hero {
-            padding-top: 200px;
-            padding-bottom: 120px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+    .cursor-dot,.cursor-ring{
+      position:fixed;
+      left:0;
+      top:0;
+      pointer-events:none;
+      z-index:9999;
+      transform:translate(-50%,-50%);
+      mix-blend-mode:difference;
+    }
 
-        .hero-content {
-            max-width: 800px;
-        }
+    .cursor-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#fff;
+    }
 
-        .hero-title {
-            font-size: 64px;
-            font-weight: 300;
-            letter-spacing: -1px;
-            margin: 0 0 16px 0;
-            color: var(--text-main);
-        }
+    .cursor-ring{
+      width:38px;
+      height:38px;
+      border:1px solid rgba(255,255,255,.75);
+      border-radius:50%;
+      transition:width .22s ease,height .22s ease,background .22s ease,border .22s ease;
+    }
 
-        .hero-subtitle {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--accent-green);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-        }
+    body.cursor-hover .cursor-ring{
+      width:66px;
+      height:66px;
+      background:rgba(255,255,255,.12);
+      border-color:rgba(255,255,255,.35);
+    }
 
-        .hero-desc {
-            font-size: 18px;
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 30px;
-            max-width: 680px;
-        }
+    .ambient{
+      position:fixed;
+      inset:auto auto 8% 4%;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:rgba(181,154,106,.18);
+      filter:blur(56px);
+      z-index:-1;
+      animation:breathe 6.5s ease-in-out infinite;
+    }
 
-        .hero-intro-text {
-            font-size: 15px;
-            color: var(--text-light);
-            line-height: 2;
-            padding-top: 30px;
-            border-top: 1px solid rgba(0,0,0,0.06);
-            max-width: 720px;
-        }
+    .ambient.two{
+      left:auto;
+      right:7%;
+      top:12%;
+      background:rgba(126,159,121,.18);
+      animation-delay:-2s;
+    }
 
-        /* 个人信息卡片 */
-        .profile-card {
-            width: 320px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
-            text-align: center;
-        }
+    @keyframes breathe{
+      0%,100%{transform:scale(.9);opacity:.55}
+      50%{transform:scale(1.18);opacity:.95}
+    }
 
-        .profile-img {
-            width: 100%;
-            height: 320px;
-            border-radius: 12px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            background: #eee;
-        }
+    .top-note{
+      height:34px;
+      background:var(--dark);
+      color:rgba(255,255,255,.76);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+    }
 
-        .profile-bio {
-            font-size: 13px;
-            color: var(--text-light);
-            line-height: 1.7;
-            padding: 0 10px 10px;
-        }
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      height:78px;
+      background:rgba(247,242,233,.82);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--line);
+    }
 
-        /* 装饰性手写体 */
-        .deco-hand {
-            font-family: var(--font-hand);
-            font-size: 28px;
-            color: var(--text-muted);
-            opacity: 0.5;
-            position: absolute;
-            margin-top: -40px;
-            margin-left: 20px;
-        }
+    .nav-wrap{
+      height:100%;
+      width:100%;
+      padding:0 72px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:24px;
+    }
 
-        /* 作品集区域 */
-        .portfolio-section {
-            padding: 80px 0;
-            border-top: 1px solid rgba(0,0,0,0.04);
-        }
+    .nav-left,.nav-right{
+      display:flex;
+      gap:30px;
+      align-items:center;
+    }
 
-        .category-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-        }
+    .nav-right{justify-content:flex-end}
 
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 宽屏三列布局 */
-            gap: 40px;
-        }
+    .nav-left a,.nav-right a{
+      font-family:var(--font-en);
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      position:relative;
+    }
 
-        /* 作品卡片 */
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            cursor: pointer;
-            position: relative;
-        }
+    .nav-left a::after,.nav-right a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-8px;
+      height:1px;
+      background:var(--ink);
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .28s ease;
+    }
 
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.08);
-        }
+    .nav-left a:hover::after,.nav-right a:hover::after{
+      transform:scaleX(1);
+      transform-origin:left;
+    }
 
-        .card-img-wrap {
-            width: 100%;
-            height: 340px;
-            overflow: hidden;
-            background: #f0f0f0;
-        }
+    .brand{
+      font-family:var(--font-en);
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:3px;
+    }
 
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
+    .hero{
+      width:100%;
+      min-height:calc(100vh - 112px);
+      margin:0;
+      padding:0;
+      display:grid;
+      grid-template-columns:48% 52%;
+      gap:0;
+      background:transparent;
+    }
 
-        .project-card:hover .card-img {
-            transform: scale(1.04);
-        }
+    .hero-copy{
+      min-height:calc(100vh - 112px);
+      border-right:1px solid var(--line);
+      background:rgba(255,253,247,.72);
+      padding:78px 88px 72px 9vw;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:44px;
+      position:relative;
+      overflow:hidden;
+    }
 
-        .card-content {
-            padding: 30px;
-        }
+    .hero-copy::after{
+      content:"";
+      position:absolute;
+      right:-140px;
+      bottom:-160px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      border:1px solid rgba(181,154,106,.22);
+      opacity:.28;
+      animation:softFloat 5s ease-in-out infinite;
+    }
 
-        .card-meta {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
-        }
+    @keyframes softFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-18px)}
+    }
 
-        .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin: 0 0 12px 0;
-        }
+    .kicker{
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:3px;
+      color:var(--gold);
+      text-transform:uppercase;
+      margin-bottom:30px;
+      line-height:1;
+    }
 
-        .card-desc {
-            font-size: 14px;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin: 0 0 24px 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+    .hero h1{
+      margin:0;
+      max-width:620px;
+      font-size:clamp(54px, 4.7vw, 82px);
+      line-height:.95;
+      letter-spacing:-3.8px;
+      font-weight:900;
+    }
 
-        .card-btn {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            border-bottom: 1px solid var(--text-main);
-            padding-bottom: 2px;
-            transition: opacity 0.3s;
-        }
-        .project-card:hover .card-btn { opacity: 0.7; }
+    .hero h1 span{
+      display:block;
+      margin-top:18px;
+      font-size:clamp(48px, 4.1vw, 70px);
+      line-height:1.02;
+      letter-spacing:-3px;
+      font-weight:300;
+      color:var(--muted);
+    }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 80px 0;
-            font-size: 13px;
-            color: var(--text-muted);
-            background: #fff;
-            margin-top: 100px;
-            border-top: 1px solid rgba(0,0,0,0.04);
-        }
+    .hero-lead{
+      margin:38px 0 0;
+      max-width:600px;
+      font-size:17px;
+      line-height:2.1;
+      letter-spacing:.2px;
+      color:var(--ink);
+    }
 
-        /* ================= 详情弹窗 Modal 优化要求 ================= */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(245, 246, 247, 0.98);
-            overflow-y: auto;
-            backdrop-filter: blur(5px);
-        }
+    .hero-body{
+      margin:24px 0 0;
+      max-width:590px;
+      font-size:13.5px;
+      line-height:2.1;
+      color:rgba(116,107,96,.9);
+    }
 
-        .modal-container {
-            max-width: 1200px;
-            margin: 80px auto;
-            position: relative;
-        }
+    .hero-actions{
+      margin-top:44px;
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
 
-        .close-btn {
-            position: fixed;
-            top: 40px;
-            right: 60px;
-            width: 50px;
-            height: 50px;
-            background: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--text-main);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            cursor: pointer;
-            z-index: 2100;
-            transition: transform 0.3s;
-        }
-        .close-btn:hover { transform: scale(1.1); }
+    .btn{
+      border:1px solid var(--ink);
+      background:var(--ink);
+      color:#fff;
+      border-radius:999px;
+      padding:12px 24px;
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1.3px;
+      text-transform:uppercase;
+      transition:transform .25s ease, background .25s ease, color .25s ease;
+    }
 
-        .modal-content {
-            background: transparent;
-            width: 100%;
-            max-width: 1200px; /* 要求：最大宽度设置为 1080px 到 1280px */
-            margin: 0 auto;
-            padding-bottom: 100px;
-        }
+    .btn:hover{transform:translateY(-3px)}
 
-        /* 模态框内的排版规范 */
-        .modal-header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-top: 40px;
-        }
+    .btn.ghost{
+      background:transparent;
+      color:var(--ink);
+    }
 
-        .modal-title {
-            font-size: 42px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin: 0 0 20px 0;
-        }
+    .btn.ghost:hover{
+      background:var(--ink);
+      color:#fff;
+    }
 
-        /* 规定样式 */
-        .project-meta {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #888;
-            font-size: 12px;
-            margin-bottom: 16px;
-            text-align: center;
-        }
+    .hero-stats{
+      margin-top:58px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:28px;
+    }
 
-        .project-intro {
-            max-width: 780px;
-            margin: 0 auto 40px;
-            font-size: 15px;
-            line-height: 1.9;
-            color: #555;
-            background: rgba(255,255,255,0.72);
-            padding: 28px;
-            border-radius: 18px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        }
+    .stat{
+      border-top:1px solid var(--line);
+      padding-top:18px;
+    }
 
-        .project-section-title {
-            font-size: 22px;
-            margin: 60px auto 24px;
-            color: #222;
-            border-left: 4px solid #7EBD7E;
-            padding-left: 14px;
-            max-width: 1000px; /* 对齐图片主体 */
-            font-weight: 500;
-        }
+    .stat b{
+      display:block;
+      font-family:var(--font-en);
+      font-size:32px;
+      line-height:1;
+      letter-spacing:-1px;
+    }
 
-        .project-summary {
-            max-width: 780px;
-            margin: 60px auto;
-            padding: 28px;
-            border-radius: 18px;
-            background: #fff;
-            color: #555;
-            line-height: 1.9;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            text-align: center;
-        }
+    .stat span{
+      display:block;
+      margin-top:8px;
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted);
+    }
 
-        .video-block {
-            width: 100%;
-            max-width: 1000px;
-            margin: 40px auto;
-            border-radius: 18px;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-        }
+    .hero-profile{
+      min-height:calc(100vh - 112px);
+      display:block;
+      position:relative;
+    }
 
-        .video-block video {
-            width: 100%;
-            display: block;
-        }
+    .profile-card{
+      width:100%;
+      height:100%;
+      min-height:calc(100vh - 112px);
+      border:none;
+      border-radius:0;
+      box-shadow:none;
+      background:#e9e4dc;
+      position:relative;
+      overflow:hidden;
+    }
 
-        .modal-gallery {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    .profile-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center center;
+      animation:profileBreath 6s ease-in-out infinite;
+    }
 
-        .modal img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 28px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-            display: block;
-        }
+    @keyframes profileBreath{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.025)}
+    }
 
-        .intro-block {
-            margin-bottom: 20px;
-        }
-        .intro-block strong { color: var(--text-main); }
+    .profile-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,.06) 54%);
+    }
 
-    </style>
+    .profile-label{
+      position:absolute;
+      left:56px;
+      bottom:54px;
+      z-index:2;
+      color:#fff;
+    }
+
+    .profile-label b{
+      display:block;
+      font-family:var(--font-en);
+      font-size:10px;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.7);
+      margin-bottom:8px;
+    }
+
+    .profile-label h3{
+      margin:0;
+      font-size:38px;
+      line-height:1.1;
+      letter-spacing:-1px;
+    }
+
+    .profile-tags{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      max-width:560px;
+    }
+
+    .profile-tags span{
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:999px;
+      font-family:var(--font-en);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      background:rgba(255,255,255,.08);
+    }
+
+    .marquee{
+      overflow:hidden;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:rgba(255,253,247,.62);
+    }
+
+    .marquee-track{
+      display:flex;
+      width:max-content;
+      animation:marquee 24s linear infinite;
+    }
+
+    .marquee span{
+      padding:18px 26px;
+      font-family:var(--font-en);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:2px;
+      color:var(--muted);
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    @keyframes marquee{
+      to{transform:translateX(-50%)}
+    }
+
+    .section{
+      padding:88px 0 0;
+      width:min(1480px, calc(100vw - 120px));
+      margin:0 auto;
+    }
+
+    .section-head{
+      display:block;
+      margin-bottom:34px;
+    }
+
+    .section-head h2{
+      margin:0;
+      max-width:760px;
+      font-size:46px;
+      line-height:1;
+      letter-spacing:-2px;
+    }
+
+    .method-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .method-card{
+      min-height:230px;
+      padding:26px;
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:26px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:transform .32s ease, box-shadow .32s ease, background .32s ease, color .32s ease;
+      overflow:hidden;
+    }
+
+    .method-card:hover{
+      transform:translateY(-8px);
+      box-shadow:var(--shadow);
+      background:var(--dark);
+      color:#fff;
+    }
+
+    .method-card b{
+      font-family:var(--font-en);
+      color:var(--gold);
+      font-size:11px;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+    }
+
+    .method-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      letter-spacing:-.6px;
+    }
+
+    .method-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.85;
+    }
+
+    .method-card:hover p{
+      color:rgba(255,255,255,.68);
+    }
+
+    .works-grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:26px;
+    }
+
+    .project-card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      transition:transform .32s ease, box-shadow .32s ease;
+      position:relative;
+    }
+
+    .project-card:hover{
+      transform:translateY(-8px);
+      box-shadow:var(--shadow);
+    }
+
+    .project-image{
+      height:380px;
+      position:relative;
+      overflow:hidden;
+      background:#eee;
+    }
+
+    .project-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .75s ease;
+    }
+
+    .project-card:hover .project-image img{
+      transform:scale(1.07);
+    }
+
+    .quick{
+      position:absolute;
+      left:18px;
+      right:18px;
+      bottom:18px;
+      transform:translateY(72px);
+      background:rgba(255,253,247,.86);
+      backdrop-filter:blur(12px);
+      color:var(--ink);
+      text-align:center;
+      border-radius:999px;
+      padding:11px;
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      transition:transform .3s ease;
+    }
+
+    .project-card:hover .quick{
+      transform:translateY(0);
+    }
+
+    .project-content{
+      padding:20px 20px 22px;
+    }
+
+    .project-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:10px;
+      font-family:var(--font-en);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .project-content h3{
+      margin:0 0 8px;
+      font-size:22px;
+      line-height:1.18;
+      letter-spacing:-.6px;
+    }
+
+    .project-content p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    footer{
+      width:min(1480px, calc(100vw - 120px));
+      margin:0 auto;
+      padding:58px 0 66px;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:3000;
+      display:none;
+      background:#F7F2E9;
+      overflow:auto;
+    }
+
+    .modal.open{display:block}
+
+    .modal-close{
+      position:fixed;
+      right:34px;
+      top:34px;
+      z-index:3400;
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      border:1px solid rgba(23,21,18,.16);
+      background:rgba(255,253,247,.92);
+      backdrop-filter:blur(14px);
+      font-size:30px;
+      line-height:48px;
+      text-align:center;
+      transition:transform .25s ease, background .25s ease;
+    }
+
+    .modal-close:hover{
+      transform:rotate(90deg);
+      background:#fff;
+    }
+
+    .case-wrap{
+      width:100%;
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:220px minmax(0,1fr);
+    }
+
+    .side-nav{
+      position:sticky;
+      top:0;
+      height:100vh;
+      padding:120px 28px 40px;
+      background:rgba(255,253,247,.72);
+      border-right:1px solid var(--line);
+      backdrop-filter:blur(18px);
+      align-self:start;
+    }
+
+    .side-nav b{
+      display:block;
+      font-family:var(--font-en);
+      font-size:10px;
+      color:var(--gold);
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    .side-nav a{
+      display:block;
+      padding:12px 0;
+      border-bottom:1px solid rgba(23,21,18,.08);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      transition:color .2s ease, padding-left .2s ease;
+    }
+
+    .side-nav a:hover{
+      color:var(--theme);
+      padding-left:6px;
+    }
+
+    .case{
+      width:100%;
+      background:#F7F2E9;
+    }
+
+    .case-hero{
+      min-height:720px;
+      display:grid;
+      grid-template-columns:56% 44%;
+      border-bottom:1px solid var(--line);
+      background:var(--paper);
+    }
+
+    .case-hero-img{
+      overflow:hidden;
+      background:#eee;
+      min-height:720px;
+    }
+
+    .case-hero-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      animation:heroBreath 6s ease-in-out infinite;
+    }
+
+    @keyframes heroBreath{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.025)}
+    }
+
+    .case-hero-copy{
+      padding:96px 92px 88px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .case-num{
+      font-family:var(--font-en);
+      color:var(--theme);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+      margin-bottom:28px;
+    }
+
+    .case-hero h1{
+      margin:0;
+      font-size:68px;
+      line-height:1;
+      letter-spacing:-2.8px;
+    }
+
+    .case-hero p{
+      margin:28px 0 0;
+      max-width:620px;
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.9;
+    }
+
+    .case-tags{
+      margin-top:34px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .case-tags span{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 12px;
+      font-family:var(--font-en);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1.1px;
+      color:var(--muted);
+      text-transform:uppercase;
+      background:rgba(255,255,255,.5);
+    }
+
+    .case-block{
+      padding:72px 88px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .case-intro{
+      display:grid;
+      grid-template-columns:300px 1fr 340px;
+      gap:56px;
+      align-items:start;
+    }
+
+    .case-intro h2,.case-section h2{
+      margin:0;
+      font-size:38px;
+      line-height:1.08;
+      letter-spacing:-1.4px;
+    }
+
+    .case-intro-main p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:2;
+    }
+
+    .design-note{
+      padding:26px;
+      border-radius:24px;
+      background:var(--dark);
+      color:#fff;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .design-note b{
+      display:block;
+      font-family:var(--font-en);
+      color:var(--theme);
+      font-size:10px;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .design-note p{
+      margin:0;
+      color:rgba(255,255,255,.72);
+      font-size:13px;
+      line-height:1.9;
+    }
+
+    .guide-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .guide-card{
+      min-height:210px;
+      padding:30px;
+      background:var(--dark);
+      color:#fff;
+      border-radius:28px;
+    }
+
+    .guide-card b{
+      display:block;
+      font-family:var(--font-en);
+      color:var(--theme);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    .guide-card p{
+      margin:0;
+      color:rgba(255,255,255,.76);
+      font-size:14px;
+      line-height:1.9;
+    }
+
+    .video-block{
+      padding:0;
+      background:#111;
+    }
+
+    .video-block video{
+      width:100%;
+      display:block;
+    }
+
+    .case-section{
+      padding:82px 88px;
+      border-bottom:1px solid var(--line);
+      scroll-margin-top:80px;
+    }
+
+    .section-title{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:64px;
+      align-items:end;
+      margin-bottom:34px;
+    }
+
+    .section-title p{
+      margin:0;
+      max-width:780px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.9;
+    }
+
+    .media-grid{
+      display:grid;
+      gap:18px;
+    }
+
+    .media-grid.feature{grid-template-columns:1fr}
+    .media-grid.two{grid-template-columns:repeat(2,1fr)}
+    .media-grid.three{grid-template-columns:repeat(3,1fr)}
+    .media-grid.mixed{grid-template-columns:repeat(4,1fr)}
+    .media-grid.mixed .media-card:first-child{
+      grid-column:span 2;
+      grid-row:span 2;
+    }
+
+    .media-card{
+      margin:0;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#fff;
+      overflow:hidden;
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+
+    .media-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 18px 50px rgba(51,40,26,.12);
+    }
+
+    .media-card img{
+      width:100%;
+      height:270px;
+      object-fit:cover;
+      background:#eee;
+      transition:transform .5s ease;
+    }
+
+    .media-card:hover img{
+      transform:scale(1.035);
+    }
+
+    .media-grid.feature .media-card img{
+      height:auto;
+      max-height:760px;
+      object-fit:contain;
+      background:#f5efe5;
+    }
+
+    .media-grid.two .media-card img{height:420px}
+    .media-grid.three .media-card img{height:280px}
+    .media-grid.mixed .media-card:first-child img{height:578px}
+
+    .caption{
+      min-height:92px;
+      padding:16px 18px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.75;
+    }
+
+    .caption strong{color:var(--ink)}
+
+    .workflow-section{
+      padding:82px 88px;
+      border-bottom:1px solid var(--line);
+      background:#F7F2E9;
+    }
+
+    .workflow-head{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:64px;
+      align-items:start;
+      margin-bottom:34px;
+    }
+
+    .workflow-head h2{
+      margin:0;
+      font-size:38px;
+      line-height:1.08;
+      letter-spacing:-1.4px;
+      font-family:var(--font-en);
+    }
+
+    .workflow-head p{
+      margin:0;
+      max-width:780px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.95;
+    }
+
+    .workflow-grid{
+      display:grid;
+      grid-template-columns:1fr 1.1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .workflow-card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+    }
+
+    .workflow-card.dark{
+      background:var(--dark);
+      color:#fff;
+    }
+
+    .workflow-card b{
+      display:block;
+      margin-bottom:18px;
+      font-family:var(--font-en);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1.8px;
+      color:var(--theme);
+      text-transform:uppercase;
+    }
+
+    .software-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .software-item{
+      padding:14px 14px 13px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.58);
+    }
+
+    .software-item strong{
+      display:block;
+      font-size:14px;
+      line-height:1.3;
+      color:var(--ink);
+    }
+
+    .software-item span{
+      display:block;
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .workflow-steps{
+      margin:0;
+      padding:0;
+      list-style:none;
+      counter-reset:step;
+    }
+
+    .workflow-steps li{
+      counter-increment:step;
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:14px;
+      padding:16px 0;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+
+    .workflow-steps li:last-child{
+      border-bottom:none;
+    }
+
+    .workflow-steps li::before{
+      content:counter(step, decimal-leading-zero);
+      font-family:var(--font-en);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1px;
+      color:var(--theme);
+    }
+
+    .workflow-steps strong{
+      display:block;
+      font-size:15px;
+      line-height:1.4;
+      color:#fff;
+    }
+
+    .workflow-steps span{
+      display:block;
+      margin-top:6px;
+      color:rgba(255,255,255,.68);
+      font-size:13px;
+      line-height:1.75;
+    }
+
+    .prompt-box{
+      margin-top:18px;
+      padding:26px 28px;
+      border-radius:28px;
+      background:#fff;
+      border:1px solid var(--line);
+    }
+
+    .prompt-box b{
+      display:block;
+      margin-bottom:16px;
+      font-family:var(--font-en);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:1.8px;
+      color:var(--theme);
+      text-transform:uppercase;
+    }
+
+    .prompt-box pre{
+      margin:0;
+      white-space:pre-wrap;
+      word-break:break-word;
+      color:var(--muted);
+      font-family:var(--font-cn);
+      font-size:13px;
+      line-height:1.9;
+    }
+
+    .workflow-note{
+      margin-top:18px;
+      padding:18px 22px;
+      border-left:3px solid var(--theme);
+      background:rgba(255,253,247,.72);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.9;
+    }
+
+    .case-summary{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:64px;
+      padding:76px 88px;
+      background:var(--dark);
+      color:#fff;
+    }
+
+    .case-summary h2{
+      margin:0;
+      font-size:42px;
+      line-height:1.1;
+      letter-spacing:-1.4px;
+    }
+
+    .case-summary p{
+      margin:0;
+      max-width:880px;
+      color:rgba(255,255,255,.72);
+      font-size:15px;
+      line-height:2;
+    }
+
+    .case-actions{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      padding:34px 0 46px;
+      background:#F7F2E9;
+    }
+
+    .case-actions button{
+      border:1px solid var(--ink);
+      background:var(--ink);
+      color:#fff;
+      border-radius:999px;
+      padding:13px 22px;
+      font-family:var(--font-en);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+
+    .case-actions button.secondary{
+      background:transparent;
+      color:var(--ink);
+    }
+
+    .thumb-strip{
+      position:sticky;
+      bottom:0;
+      z-index:3200;
+      padding:12px 0;
+      border-top:1px solid var(--line);
+      background:rgba(247,242,233,.92);
+      backdrop-filter:blur(16px);
+    }
+
+    .thumb-inner{
+      width:calc(100vw - 320px);
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding-bottom:3px;
+    }
+
+    .thumb-inner button{
+      width:76px;
+      height:52px;
+      flex:0 0 auto;
+      border:1px solid transparent;
+      background:transparent;
+      padding:0;
+      opacity:.55;
+      transition:opacity .2s ease,border .2s ease,transform .2s ease;
+    }
+
+    .thumb-inner button:hover{
+      opacity:1;
+      border-color:var(--theme);
+      transform:translateY(-2px);
+    }
+
+    .thumb-inner img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+  </style>
 </head>
+
 <body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="ambient"></div>
+  <div class="ambient two"></div>
 
-    <header>
-        <div class="logo">PORTFOLIO.</div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#works">Works</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+  <div class="top-note">Graduate Design Portfolio · Culture Translation · Visual Narrative · Product System</div>
+
+  <header>
+    <div class="nav-wrap">
+      <nav class="nav-left">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#works">Works</a>
+      </nav>
+
+      <a class="brand" href="#overview">PORTFOLIO</a>
+
+      <nav class="nav-right">
+        <a href="#method">Approach</a>
+        <a href="#works">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero reveal" id="overview">
+      <div class="hero-copy">
+        <div>
+          <div class="kicker">Graduate Design Portfolio · 2026</div>
+
+          <h1>
+            Design Portfolio
+            <span>as Visual Narrative</span>
+          </h1>
+
+          <p class="hero-lead">
+            本作品集围绕“文化转译、视觉叙事、产品系统与数字交互”展开，探索设计如何把文化、自然和日常体验转化为可被理解、可被传播的视觉系统。
+          </p>
+
+          <p class="hero-body">
+            作品不是简单按媒介堆叠，而是按照“问题提出 — 视觉转译 — 系统构建 — 场景应用”的逻辑组织。首页用于建立整体观看路径，项目详情页进一步说明每个作品的设计问题、方法、图像含义与最终价值。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#works">View Selected Works</a>
+            <a class="btn ghost" href="#method">View Design Method</a>
+          </div>
         </div>
-    </header>
 
-    <div class="container" id="home">
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Design Portfolio</h1>
-                <div class="hero-subtitle">
-                    IP Design · Packaging Design · Product Design · UI/UX Design · Poster Design
-                </div>
-                <p class="hero-desc">
-                    研究生设计作品集，展示 IP 形象设计、文化包装设计、儿童产品系统设计、数字界面设计与生态议题海报设计。
-                </p>
-                
-                <div class="hero-intro-text">
-                    <span class="deco-hand">Overview</span>
-                    本作品集围绕文化转译、视觉叙事、产品系统与数字交互展开，包含 IP 形象设计、包装设计、儿童产品系统设计、小程序界面设计与生态议题海报设计。<br><br>
-                    作品通过 AI 辅助生成、视觉系统构建和场景化展示，探索设计在文化传播、产品体验和公共议题表达中的可能性。
-                </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <b>06</b>
+            <span>精选设计项目</span>
+          </div>
+
+          <div class="stat">
+            <b>05</b>
+            <span>设计方向覆盖</span>
+          </div>
+
+          <div class="stat">
+            <b>04</b>
+            <span>观看逻辑层级</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-profile">
+        <div class="profile-card">
+          <img src="images/profile.jpg" alt="Designer Profile">
+          <div class="profile-overlay"></div>
+
+          <div class="profile-label">
+            <b>Designer Portrait</b>
+            <h3>Graduate Designer</h3>
+
+            <div class="profile-tags">
+              <span>Culture Translation</span>
+              <span>Visual Narrative</span>
+              <span>Product System</span>
+              <span>UI / UX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee">
+      <div class="marquee-track">
+        <span>Culture Translation</span>
+        <span>IP Design</span>
+        <span>Packaging Design</span>
+        <span>Product System</span>
+        <span>UI / UX Design</span>
+        <span>Information Design</span>
+        <span>Culture Translation</span>
+        <span>IP Design</span>
+        <span>Packaging Design</span>
+        <span>Product System</span>
+        <span>UI / UX Design</span>
+        <span>Information Design</span>
+      </div>
+    </section>
+
+    <section class="section reveal" id="method">
+      <div class="section-head">
+        <h2>Portfolio Logic</h2>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <b>01 / Problem</b>
+          <div>
+            <h3>设计问题</h3>
+            <p>每个项目回应一个明确问题：文化如何年轻化、产品如何系统化、生态议题如何视觉化。</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <b>02 / Translation</b>
+          <div>
+            <h3>视觉转译</h3>
+            <p>从文化符号、自然现象和用户需求中提取视觉线索，转化为清晰的设计语言。</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <b>03 / System</b>
+          <div>
+            <h3>系统构建</h3>
+            <p>让单一图像扩展为角色系统、包装系统、产品系统、界面流程或信息视觉系统。</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <b>04 / Scenario</b>
+          <div>
+            <h3>场景应用</h3>
+            <p>通过周边、开盒体验、桌面场景、移动端流程和公共传播说明设计价值。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="works">
+      <div class="section-head">
+        <h2>Selected Works</h2>
+      </div>
+
+      <div class="works-grid" id="worksGrid"></div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <span>© 2026 Graduate Design Portfolio</span>
+    <span>Culture Translation · Visual Narrative · Product System</span>
+  </footer>
+
+  <div class="modal" id="projectModal">
+    <div class="modal-close" onclick="closeModal()">×</div>
+
+    <div class="case-wrap">
+      <aside class="side-nav" id="sideNav"></aside>
+      <article class="case" id="caseContent"></article>
+    </div>
+
+    <div class="thumb-strip">
+      <div class="thumb-inner" id="thumbStrip"></div>
+    </div>
+  </div>
+
+  <script>
+    const projects = {
+      project1: {
+        id:"project1",
+        number:"01",
+        category:"IP Design",
+        theme:"#B75F4E",
+        title:"龙 IP 形象设计",
+        short:"传统龙文化如何转译为年轻化潮玩 IP？",
+        cover:"images/project1/cover.jpg",
+        hero:"images/project1/detail1.jpg",
+        meta:["IP Design","Character System","Trendy Toy"],
+        intro:[
+          "《龙宝 Dragon Boy》是一个以中国龙文化为灵感的原创潮玩 IP 形象设计。角色融合 Q 版儿童形象、龙头帽、东方童趣与国潮视觉语言，形成具有亲和力和收藏感的角色系统。",
+          "项目以“东方童趣 × 潮玩收藏 × 吉祥守护”为核心概念，通过角色三视图、表情系统、主题换装和周边应用，构建完整的 IP 视觉系统。"
+        ],
+        guide:{
+          problem:"传统龙文化符号容易显得厚重、严肃，与年轻潮玩语境之间存在距离。",
+          method:"采用 Q 版比例、儿童形象、龙头帽、国潮色彩、表情系统和周边延展进行转译。",
+          output:"形成具有文化识别度、角色亲和力和商业延展潜力的原创潮玩 IP。"
+        },
+        video:"videos/ip-demo.mp4",
+        summary:"该项目探索了传统文化符号在当代潮玩语境下的转译方式，使角色既具有文化识别度，又具备年轻化传播和商业延展潜力。",
+        sections:[
+          {
+            title:"角色主视觉",
+            desc:"先用主视觉建立角色第一印象，突出亲和力、童趣和国潮气质。",
+            layout:"feature",
+            items:[
+              ["images/project1/detail1.jpg","角色主视觉：强调圆润比例、龙头帽和东方童趣。"],
+              ["images/project1/detail2.jpg","姿态展示：让角色从单一造型转向可传播的 IP 形象。"],
+              ["images/project1/detail3.jpg","文化识别：强化龙文化与祥瑞守护的视觉关系。"]
+            ]
+          },
+          {
+            title:"角色设定与三视图",
+            desc:"设定图用于证明角色结构完整，具备建模和实体化基础。",
+            layout:"three",
+            items:[
+              ["images/project1/detail4.jpg","三视图：说明正面、侧面、背面结构。"],
+              ["images/project1/detail5.jpg","细节设定：细化龙头帽、服饰和身体比例。"],
+              ["images/project1/detail6.jpg","比例关系：强化角色轮廓和识别点。"]
+            ]
+          },
+          {
+            title:"造型延展",
+            desc:"延展图用网格方式展示，避免单张大图堆叠。",
+            layout:"three",
+            items:[
+              ["images/project1/detail7.jpg","主题造型：展示不同情境适配能力。"],
+              ["images/project1/detail8.jpg","服饰变化：增强收藏属性。"],
+              ["images/project1/detail9.jpg","风格延展：体现系列开发空间。"],
+              ["images/project1/detail10.jpg","造型补充：丰富角色性格层次。"],
+              ["images/project1/detail11.jpg","主题适配：保持角色识别度。"],
+              ["images/project1/detail12.jpg","系统延展：说明 IP 可持续开发。"]
+            ]
+          },
+          {
+            title:"表情系统与周边应用",
+            desc:"表情和周边体现角色的传播力和商业延展能力。",
+            layout:"mixed",
+            items:[
+              ["images/project1/detail13.jpg","表情系统：让角色具备情绪表达。"],
+              ["images/project1/detail14.jpg","情绪延展：增强社交传播潜力。"],
+              ["images/project1/detail15.jpg","周边应用：验证商业落地可能性。"],
+              ["images/project1/detail16.jpg","实物场景：强化收藏感。"],
+              ["images/project1/detail17.jpg","载体统一：保持视觉系统一致。"],
+              ["images/project1/detail18.jpg","日常用品：拓展文创应用场景。"],
+              ["images/project1/detail19.jpg","品牌延展：增强识别度。"],
+              ["images/project1/detail20.jpg","完整链路：从角色到产品应用。"]
+            ]
+          }
+        ]
+      },
+
+      project2: {
+        id:"project2",
+        number:"02",
+        category:"Packaging",
+        theme:"#7E9F79",
+        title:"宁和礼包装设计",
+        short:"农产品包装如何建立地域文化和礼赠感？",
+        cover:"images/project2/cover.jpg",
+        hero:"images/project2/detail1.jpg",
+        meta:["Packaging","Agricultural Product","Gift Box"],
+        intro:[
+          "《宁和礼》是一个以地方农产品为主题的礼盒包装设计项目。包装视觉结合地方建筑、农产品图形、山水线描与东方礼赠美学，形成具有地域文化和礼赠属性的农产品包装系统。",
+          "项目希望通过包装系统提升农产品的品牌感和文化价值。"
+        ],
+        guide:{
+          problem:"传统农产品包装容易同质化，礼品属性不足，地域文化表达较弱。",
+          method:"结合地方建筑、山水线描、农产品图形和开盒结构，建立包装叙事。",
+          output:"形成具有东方气质、地域识别度和礼赠仪式感的农产品礼盒系统。"
+        },
+        video:"videos/shichuang-demo.mp4",
+        summary:"该项目通过礼盒结构、系列内盒和视觉插画系统，建立了具有东方气质和地方文化表达的农产品礼盒包装方案。",
+        sections:[
+          {
+            title:"礼盒主视觉",
+            desc:"建立包装整体气质，突出东方礼赠感和地方文化识别。",
+            layout:"two",
+            items:[
+              ["images/project2/detail1.jpg","礼盒主视觉：突出东方礼赠感与地方文化识别。"],
+              ["images/project2/detail2.jpg","线描元素：建立农产品与地域文化之间的联系。"]
+            ]
+          },
+          {
+            title:"礼盒结构与开盒",
+            desc:"开盒结构是包装体验的核心，用双列呈现更紧凑。",
+            layout:"two",
+            items:[
+              ["images/project2/detail3.jpg","礼盒结构：强调礼赠过程中的仪式感。"],
+              ["images/project2/detail4.jpg","开盒层次：说明包装包含体验设计。"]
+            ]
+          },
+          {
+            title:"内盒包装与系列应用",
+            desc:"系列图用三列展示，强化包装系统完整度。",
+            layout:"three",
+            items:[
+              ["images/project2/detail5.jpg","内盒包装：说明不同农产品之间的统一系统。"],
+              ["images/project2/detail6.jpg","产品排布：增强陈列感和完整度。"],
+              ["images/project2/detail7.jpg","系列化展示：强化品牌统一性。"],
+              ["images/project2/detail8.jpg","应用场景：说明真实礼赠环境中的表现。"],
+              ["images/project2/detail9.jpg","系统总结：从地域元素到产品包装系统。"]
+            ]
+          }
+        ]
+      },
+
+      project3: {
+        id:"project3",
+        number:"03",
+        category:"Packaging",
+        theme:"#B59A6A",
+        title:"丝绸礼盒包装设计",
+        short:"丝绸包装如何表现柔软触感与东方仪式感？",
+        cover:"images/project3/cover.jpg",
+        hero:"images/project3/detail1.jpg",
+        meta:["Packaging","Cultural Product","Silk Gift Box"],
+        intro:[
+          "《触见东方》是一个以东方丝绸文化为主题的高端礼盒包装设计。作品通过柔和米白、浅金、织物纹理、山水线条与开盒结构，表现丝绸产品的精致感和礼赠属性。",
+          "项目将东方山水、织物肌理和礼盒开合体验结合，营造柔和、安静、精致的视觉与触觉感受。"
+        ],
+        guide:{
+          problem:"丝绸产品具有柔软、细腻和东方文化意味，但包装中常缺少触感与空间层次。",
+          method:"使用米白、浅金、织物纹理、山水线条和开盒结构强化触觉联想。",
+          output:"形成具有东方美学、高端礼赠感和材质表达力的丝绸包装系统。"
+        },
+        video:"videos/sichou-demo.mp4",
+        summary:"该项目通过包装结构、内部陈列和品牌延展，构建了具有东方美学和高端礼赠感的丝绸包装系统。",
+        sections:[
+          {
+            title:"礼盒主视觉",
+            desc:"丝绸项目突出柔软、高级和东方气质。",
+            layout:"two",
+            items:[
+              ["images/project3/detail1.jpg","礼盒外观：米白与浅金带来柔和高级感。"],
+              ["images/project3/detail2.jpg","东方山水：通过线条与留白表达安静气质。"]
+            ]
+          },
+          {
+            title:"开盒体验",
+            desc:"开盒过程体现包装的空间层次和礼赠仪式。",
+            layout:"three",
+            items:[
+              ["images/project3/detail3.jpg","开盒层次：强化礼赠过程。"],
+              ["images/project3/detail4.jpg","产品呈现：让丝绸被逐步展示。"],
+              ["images/project3/detail5.jpg","结构关系：说明包装与陈列的连接。"]
+            ]
+          },
+          {
+            title:"材质与陈列",
+            desc:"材质细节和产品陈列用密集网格呈现，更有内容厚度。",
+            layout:"three",
+            items:[
+              ["images/project3/detail6.jpg","材质细节：回应丝绸柔软触感。"],
+              ["images/project3/detail7.jpg","局部工艺：强化精致度。"],
+              ["images/project3/detail8.jpg","纹理系统：统一材质、色彩和品牌气质。"],
+              ["images/project3/detail9.jpg","丝绸陈列：突出产品柔软质感。"],
+              ["images/project3/detail10.jpg","内部空间：增强陈列秩序。"],
+              ["images/project3/detail11.jpg","展示功能：包装承担价值呈现。"]
+            ]
+          },
+          {
+            title:"品牌延展",
+            desc:"品牌延展作为收束，体现完整商业应用。",
+            layout:"three",
+            items:[
+              ["images/project3/detail12.jpg","品牌载体：展示视觉延展。"],
+              ["images/project3/detail13.jpg","商业应用：说明包装系统可延伸。"],
+              ["images/project3/detail14.jpg","物料延展：增强品牌完整度。"],
+              ["images/project3/detail15.jpg","系统总结：从视觉到应用的完整表达。"]
+            ]
+          }
+        ]
+      },
+
+      project4: {
+        id:"project4",
+        number:"04",
+        category:"Product",
+        theme:"#7E9F79",
+        title:"儿童自然学习桌面产品设计",
+        short:"如何用产品系统改善儿童学习桌面环境？",
+        cover:"images/project4/cover1.jpg",
+        hero:"images/project4/cover2.jpg",
+        meta:["Product Design","System Design","Children Product"],
+        intro:[
+          "《光芽 Grow Light》是一个面向儿童学习场景的自然学习桌面产品系统设计，包括植物加湿器、儿童学习护眼台灯和智能植物学习钟。",
+          "项目通过空气湿度、护眼照明、时间管理与植物陪伴，为儿童创造健康、温暖、自然的学习环境。"
+        ],
+        guide:{
+          problem:"儿童学习桌面常面临光照不舒适、空气干燥、专注时间难管理和学习氛围单一等问题。",
+          method:"用三件产品分别承担空气调节、护眼照明和专注管理，并通过统一 CMF 形成系列。",
+          output:"形成自然陪伴、健康学习和儿童友好的桌面产品系统。"
+        },
+        video:"videos/chanping-demo.mp4",
+        summary:"该项目强调系统化产品设计，而不是将多个功能堆叠在一个产品中。通过统一的 CMF、圆角语言和场景化展示，形成具有现实可行性的儿童学习桌面产品系列。",
+        sections:[
+          {
+            title:"系统主视觉",
+            desc:"先用一张主视觉建立三件产品之间的整体关系。",
+            layout:"feature",
+            items:[
+              ["images/project4/cover2.jpg","系列主视觉：展示三件产品的整体气质和自然学习场景。"],
+              ["images/project4/detail1.jpg","场景氛围：说明自然陪伴与学习环境的关系。"],
+              ["images/project4/detail2.jpg","产品情绪：突出儿童友好与温暖感。"]
+            ]
+          },
+          {
+            title:"三件产品角色",
+            desc:"三件产品分别承担不同功能，用三列展示更像产品系统研究。",
+            layout:"three",
+            items:[
+              ["images/project4/detail3.jpg","系统总览：加湿器、台灯、学习钟的系列关系。"],
+              ["images/project4/detail4.jpg","功能分工：三件产品互补而非堆叠。"],
+              ["images/project4/detail5.jpg","造型语言：统一圆角、色彩和儿童友好气质。"]
+            ]
+          },
+          {
+            title:"单品功能细节",
+            desc:"用密集网格呈现每个产品的功能与局部细节。",
+            layout:"three",
+            items:[
+              ["images/project4/detail6.jpg","植物加湿器：改善空气干燥问题。"],
+              ["images/project4/detail7.jpg","加湿器细节：增强自然陪伴感。"],
+              ["images/project4/detail8.jpg","儿童友好：降低使用距离感。"],
+              ["images/project4/detail9.jpg","桌面场景：展示实际使用方式。"],
+              ["images/project4/detail10.jpg","护眼台灯：回应光照舒适问题。"],
+              ["images/project4/detail11.jpg","灯具功能：强调健康学习体验。"],
+              ["images/project4/detail12.jpg","台灯细节：说明可用性。"],
+              ["images/project4/detail13.jpg","系统位置：台灯在桌面中的作用。"],
+              ["images/project4/detail14.jpg","学习钟：辅助儿童时间管理。"],
+              ["images/project4/detail15.jpg","时间交互：建立专注节奏。"],
+              ["images/project4/detail16.jpg","界面细节：说明交互方式。"],
+              ["images/project4/detail17.jpg","植物陪伴：强化概念联系。"]
+            ]
+          },
+          {
+            title:"结构 / CMF / 交互",
+            desc:"结构、CMF 和交互作为专业论证部分，应紧凑展示。",
+            layout:"mixed",
+            items:[
+              ["images/project4/detail18.jpg","结构图：说明内部逻辑和功能实现。"],
+              ["images/project4/detail19.jpg","功能细节：让概念更接近落地方案。"],
+              ["images/project4/detail20.jpg","结构体验：说明产品与使用行为的关系。"],
+              ["images/project4/detail21.jpg","功能支撑：补充系统完整性。"],
+              ["images/project4/detail22.jpg","CMF 设定：统一色彩、材质和表面处理。"],
+              ["images/project4/detail23.jpg","系统关系：说明三件产品之间的连接。"],
+              ["images/project4/detail24.jpg","交互逻辑：提升系统体验完整性。"]
+            ]
+          },
+          {
+            title:"场景与品牌延展",
+            desc:"场景图用于收束项目，说明设计进入真实使用环境。",
+            layout:"two",
+            items:[
+              ["images/project4/detail25.jpg","学习场景：展示产品在儿童桌面的实际使用效果。"],
+              ["images/project4/detail26.jpg","品牌延展：说明产品系统具备进一步开发空间。"]
+            ]
+          }
+        ]
+      },
+
+      project5: {
+        id:"project5",
+        number:"05",
+        category:"UI/UX",
+        theme:"#4B6F91",
+        title:"石窗小程序设计",
+        short:"地方文化如何被转化为易浏览的移动端体验？",
+        cover:"images/project5/cover.jpg",
+        hero:"images/project5/detail1.jpg",
+        meta:["UI/UX","Mini Program","Cultural Digital Design"],
+        intro:[
+          "《石窗》是一个围绕地方石窗文化展开的文化导览小程序设计。项目通过移动端界面呈现石窗文化、建筑细节、路线导览和互动浏览体验。",
+          "项目探索地方文化的数字化传播方式，让传统建筑内容拥有更轻量、更易理解的移动端入口。"
+        ],
+        guide:{
+          problem:"地方传统建筑与石窗文化具有审美和历史价值，但缺少易理解、易浏览、易参与的数字化入口。",
+          method:"通过首页、文化介绍、详情页面、路线浏览、用户流程和视觉规范组织体验。",
+          output:"形成适合移动端传播的地方文化导览小程序体验。"
+        },
+        summary:"该项目将传统文化内容转化为移动端交互体验，使用户能够以更轻量、更直观的方式了解石窗文化。",
+        sections:[
+          {
+            title:"项目概念与首页",
+            desc:"UI 项目采用多屏并置，而不是一张张大图堆叠。",
+            layout:"three",
+            items:[
+              ["images/project5/detail1.jpg","项目概念：说明石窗文化的数字化切入点。"],
+              ["images/project5/detail2.jpg","首页设计：建立文化内容的第一入口。"],
+              ["images/project5/detail3.jpg","信息层级：组织视觉焦点和内容入口。"]
+            ]
+          },
+          {
+            title:"功能架构与用户流程",
+            desc:"功能架构和用户流程是 UI 项目的核心专业内容。",
+            layout:"three",
+            items:[
+              ["images/project5/detail4.jpg","功能架构：说明内容模块之间的关系。"],
+              ["images/project5/detail5.jpg","用户流程：展示浏览路径和交互逻辑。"],
+              ["images/project5/detail6.jpg","内容转译：从文化资料到移动端体验。"]
+            ]
+          },
+          {
+            title:"核心页面 UI",
+            desc:"核心页面以网格呈现，形成完整界面系统。",
+            layout:"mixed",
+            items:[
+              ["images/project5/detail7.jpg","核心页面：展示界面风格和信息组织方式。"],
+              ["images/project5/detail8.jpg","详情页：呈现石窗文化内容和建筑细节。"],
+              ["images/project5/detail9.jpg","页面统一：保持视觉系统一致。"],
+              ["images/project5/detail10.jpg","阅读体验：降低文化理解门槛。"],
+              ["images/project5/detail11.jpg","跳转关系：让交互路径更加清晰。"],
+              ["images/project5/detail12.jpg","浏览路径：从首页进入具体内容。"],
+              ["images/project5/detail13.jpg","完整流程：呈现移动端体验闭环。"]
+            ]
+          },
+          {
+            title:"视觉规范与样机展示",
+            desc:"规范和样机证明方案完整度。",
+            layout:"three",
+            items:[
+              ["images/project5/detail14.jpg","视觉规范：说明颜色、字体和组件系统。"],
+              ["images/project5/detail15.jpg","样机展示：呈现真实设备中的效果。"],
+              ["images/project5/detail16.jpg","界面完整度：强化落地表现。"],
+              ["images/project5/detail17.jpg","设计转译：总结文化到体验的转换。"]
+            ]
+          }
+        ]
+      },
+
+      project6: {
+        id:"project6",
+        number:"06",
+        category:"Poster",
+        theme:"#2D6F9F",
+        title:"海洋海报设计",
+        short:"如何让美丽的自然奇观转化为生态警示？",
+        cover:"images/project6/cover1.jpg",
+        hero:"images/project6/cover2.jpg",
+        meta:["Poster Design","Information Design","Environmental Visual"],
+        intro:[
+          "《蓝色幻象 The Blue Illusion》是一个以“蓝眼泪”现象为切入点的生态议题海报设计项目。",
+          "项目围绕“美丽 / 危机”的双重面孔展开，通过视觉叙事和信息设计，呈现蓝眼泪从浪漫自然奇观到海岸生态警讯的认知转变。"
+        ],
+        guide:{
+          problem:"蓝眼泪常被大众作为浪漫景观观看，但背后可能关联海水富营养化和生态系统失衡。",
+          method:"将梦幻视觉与生态危机信息并置，通过海报、信息图和应用场景建立认知反差。",
+          output:"引导观者从观看自然奇观转向理解海洋生态问题与修复行动。"
+        },
+        summary:"该项目通过公益海报、视觉隐喻和信息可视化语言，引导观者从观看自然奇观转向理解海洋生态问题与修复行动。",
+        sections:[
+          {
+            title:"项目封面",
+            desc:"用一张强视觉大图建立展览感和情绪冲击。",
+            layout:"feature",
+            items:[
+              ["images/project6/cover2.jpg","项目封面：突出蓝眼泪的梦幻感与不安感。"],
+              ["images/project6/detail1.jpg","主视觉：建立美丽景观与生态警讯的双重关系。"],
+              ["images/project6/detail2.jpg","议题引入：通过视觉氛围引入海洋问题。"]
+            ]
+          },
+          {
+            title:"美丽 / 危机概念",
+            desc:"并置版式表达美丽与危机的概念反差。",
+            layout:"two",
+            items:[
+              ["images/project6/detail3.jpg","美丽表象：呈现蓝眼泪作为浪漫景观的一面。"],
+              ["images/project6/detail4.jpg","生态危机：引导观者重新理解自然奇观。"]
+            ]
+          },
+          {
+            title:"海岸剖面信息图",
+            desc:"信息图用于解释生态逻辑，让视觉表达有依据。",
+            layout:"three",
+            items:[
+              ["images/project6/detail5.jpg","海岸剖面：解释蓝眼泪与生态环境的关系。"],
+              ["images/project6/detail6.jpg","信息设计：将复杂问题转化为可读图像。"],
+              ["images/project6/detail7.jpg","科学支撑：补充视觉叙事的信息依据。"]
+            ]
+          },
+          {
+            title:"系列海报与应用展示",
+            desc:"系列海报像展墙一样排列，更紧凑也更有冲击。",
+            layout:"three",
+            items:[
+              ["images/project6/detail8.jpg","系列海报：突出奇观与警示的并置。"],
+              ["images/project6/detail9.jpg","视觉传播：增强议题表达力度。"],
+              ["images/project6/detail10.jpg","叙事角度：以不同画面共同完成生态叙事。"],
+              ["images/project6/detail11.jpg","公共应用：展示海报进入传播场景的效果。"],
+              ["images/project6/detail12.jpg","议题落地：说明视觉如何进入公共教育场景。"]
+            ]
+          }
+        ]
+      }
+    };
+
+    const workflowData = {
+      project1:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目以 IP 角色系统为核心，制作流程从文化符号提取、角色草图、AI 辅助概念生成，到三视图整理、表情系统、周边应用 mockup，形成完整的角色商业化展示链路。",
+        software:[
+          ["Midjourney / AI Image","用于角色概念草图、风格探索、服饰氛围和周边场景灵感生成。"],
+          ["Adobe Illustrator","用于角色轮廓整理、矢量化图形、表情系统、图标和延展元素绘制。"],
+          ["Adobe Photoshop","用于图像修饰、材质融合、场景合成、展示图精修和版面统一。"],
+          ["Blender / C4D","用于潮玩角色三维体块参考、产品展示角度模拟和基础光影预览。"],
+          ["KeyShot","用于角色或周边产品的渲染质感测试，强化潮玩收藏感。"],
+          ["Figma","用于整理作品集页面结构、信息层级和最终网页展示逻辑。"]
+        ],
+        steps:[
+          ["文化符号提取","从中国龙、童子形象、国潮配色、祥瑞寓意中提取核心视觉符号。"],
+          ["角色方向生成","通过 AI 辅助生成多个角色方向，再筛选更适合年轻潮玩语境的比例和表情。"],
+          ["角色系统整理","在 Illustrator 中统一角色轮廓、服装细节、表情、三视图和主题换装。"],
+          ["周边应用扩展","将角色应用到徽章、贴纸、钥匙扣、帆布袋等载体，验证 IP 商业延展性。"],
+          ["作品集排版","按照主视觉、三视图、表情系统、换装、周边应用的顺序组织观看路径。"]
+        ],
+        prompt:`提示词示例：
+Chinese dragon kid character, cute vinyl toy style, chibi proportion, dragon hat, traditional Chinese elements, red and turquoise color palette, soft rounded shape, collectible designer toy, front view, clean background, high detail, playful expression, cultural IP design
+
+负面提示词：
+realistic human, scary dragon, overly complex costume, dark horror style, low quality, messy background, distorted face`
+      },
+
+      project2:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目以地方农产品礼盒包装为核心，重点在于地域文化提取、礼盒结构规划、包装插画系统和开盒体验展示。整体流程强调从地方元素到礼赠体验的转化。",
+        software:[
+          ["Adobe Illustrator","用于包装刀版、图形符号、山水线描、农产品插画和系列标签设计。"],
+          ["Adobe Photoshop","用于包装效果图合成、材质贴图、礼盒开盒展示和画面精修。"],
+          ["Blender / C4D","用于礼盒结构建模、开盒角度模拟和包装空间关系验证。"],
+          ["KeyShot","用于礼盒材质、纸张纹理、光影和产品陈列渲染。"],
+          ["Midjourney / AI Image","用于前期地域氛围、农产品视觉、东方礼盒风格参考生成。"],
+          ["Figma","用于作品集叙事排版和项目展示页面的信息组织。"]
+        ],
+        steps:[
+          ["地域元素研究","分析地方建筑、农产品、山水纹样和礼赠文化，建立视觉关键词。"],
+          ["包装结构规划","确定外盒、内盒、开盒方式、产品摆放关系和信息层级。"],
+          ["插画与图形设计","在 Illustrator 中绘制线描山水、农产品图形和系列化包装元素。"],
+          ["效果图与材质模拟","通过 3D 或 Photoshop 合成展示包装质感、结构和开盒体验。"],
+          ["场景化展示","补充礼赠场景、产品陈列和系列包装，增强真实落地感。"]
+        ],
+        prompt:`提示词示例：
+premium Chinese agricultural gift box packaging, elegant oriental style, local culture inspired, soft beige and green color palette, line art landscape, natural food product, high-end paper texture, open box presentation, refined lighting, clean composition
+
+负面提示词：
+cheap packaging, noisy background, plastic texture, over saturated colors, cluttered layout, low resolution`
+      },
+
+      project3:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目围绕丝绸礼盒包装展开，重点表现柔软触感、东方气质和高端礼赠体验。流程中注重材质、色彩、开盒层次和品牌延展之间的统一。",
+        software:[
+          ["Adobe Illustrator","用于品牌图形、包装线条、山水纹样、标签和视觉规范设计。"],
+          ["Adobe Photoshop","用于丝绸材质处理、包装效果图合成、色调统一和画面精修。"],
+          ["Blender / C4D","用于礼盒结构建模、开盒空间关系和产品陈列模拟。"],
+          ["KeyShot","用于纸张、丝绸、烫金、柔光材质的渲染表现。"],
+          ["Midjourney / AI Image","用于东方丝绸氛围、材质参考、礼盒场景和山水视觉探索。"],
+          ["Figma","用于作品集页面编排、项目文字层级和展示节奏整理。"]
+        ],
+        steps:[
+          ["材质关键词设定","提取丝绸的柔软、细腻、光泽、轻盈等触觉关键词。"],
+          ["东方视觉转译","将山水线条、留白、浅金、米白等元素转化为包装视觉语言。"],
+          ["礼盒结构设计","规划外盒、内托、丝绸陈列和开盒层次，强化礼赠仪式感。"],
+          ["材质与光影表现","通过渲染或合成表现纸张、丝绸、烫金和柔光关系。"],
+          ["品牌延展整理","补充标签、卡片、手提袋等延展物料，形成完整包装系统。"]
+        ],
+        prompt:`提示词示例：
+luxury silk gift box packaging, oriental aesthetic, soft ivory and champagne gold color, subtle fabric texture, elegant mountain line art, premium paper box, delicate opening experience, minimal composition, soft studio lighting
+
+负面提示词：
+heavy dark colors, cheap material, messy textile, over decorated pattern, low quality render, plastic look`
+      },
+
+      project4:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目是儿童自然学习桌面产品系统设计，流程从用户场景问题出发，经过功能拆分、造型语言统一、CMF 设定、结构与交互说明，最终形成完整的桌面产品系列。",
+        software:[
+          ["Rhino / Fusion 360","用于产品结构建模、曲面推敲、比例调整和功能空间验证。"],
+          ["KeyShot","用于产品材质、CMF、灯光、场景和最终效果图渲染。"],
+          ["Adobe Illustrator","用于功能图标、结构说明、信息图、使用流程和版面辅助图形。"],
+          ["Adobe Photoshop","用于渲染图后期、场景合成、色彩统一和细节强化。"],
+          ["Figma","用于交互界面、学习钟界面流程和作品集页面组织。"],
+          ["Midjourney / AI Image","用于儿童学习场景、自然氛围、CMF 方向和情绪板参考。"]
+        ],
+        steps:[
+          ["用户场景分析","分析儿童学习桌面中的光照、空气、时间管理和陪伴需求。"],
+          ["功能模块拆分","将需求拆分为加湿器、护眼台灯、学习钟三类产品角色。"],
+          ["造型语言统一","统一圆角、低饱和色彩、植物元素和儿童友好的产品比例。"],
+          ["三维建模与渲染","完成产品建模、材质设定、灯光测试和使用场景渲染。"],
+          ["交互与系统说明","补充学习钟界面、功能流程、CMF 和产品系统关系图。"]
+        ],
+        prompt:`提示词示例：
+children study desk product system, nature inspired design, soft rounded shape, pastel green and warm beige CMF, plant humidifier, eye protection desk lamp, smart study timer, friendly product design, clean studio render, warm learning environment
+
+负面提示词：
+sharp industrial style, adult office product, dark colors, complicated buttons, unsafe shape, messy desk`
+      },
+
+      project5:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目为地方文化导览小程序设计，重点是把石窗文化转化为易浏览、易理解的移动端体验。流程包含信息架构、用户路径、界面视觉、组件规范和样机展示。",
+        software:[
+          ["Figma","用于小程序界面设计、组件库、页面流程、交互原型和视觉规范整理。"],
+          ["Adobe Illustrator","用于图标、文化符号、线性插画、信息结构图和辅助视觉元素绘制。"],
+          ["Adobe Photoshop","用于图片处理、界面样机合成、展示图优化和视觉统一。"],
+          ["Midjourney / AI Image","用于文化氛围图、石窗场景参考、视觉情绪板生成。"],
+          ["FigJam","用于用户流程、功能架构、页面关系和信息层级梳理。"],
+          ["Principle / ProtoPie","用于关键页面动效、跳转逻辑和交互演示。"]
+        ],
+        steps:[
+          ["文化内容整理","梳理石窗的历史、造型、建筑细节、游览场景和用户需求。"],
+          ["信息架构建立","确定首页、文化介绍、详情页、路线导览、互动浏览等模块。"],
+          ["界面视觉设计","在 Figma 中完成页面布局、字体、色彩、组件和图标系统。"],
+          ["原型交互制作","建立用户浏览路径、页面跳转逻辑和核心交互流程。"],
+          ["样机与规范输出","整理手机样机、视觉规范、组件说明和完整体验闭环。"]
+        ],
+        prompt:`提示词示例：
+mobile mini program interface for traditional Chinese stone window culture, clean UI design, cultural heritage guide app, warm neutral color palette, elegant line icons, architecture details, modern layout, readable information hierarchy, calm and refined visual style
+
+负面提示词：
+overly decorative interface, crowded UI, low readability, neon colors, gaming style, messy icons`
+      },
+
+      project6:{
+        title:"Software / Workflow / Prompt",
+        intro:"本项目为生态议题海报设计，流程从蓝眼泪现象研究出发，将自然奇观与生态危机并置，通过海报、信息图和公共传播场景建立视觉警示。",
+        software:[
+          ["Adobe Photoshop","用于海报合成、图像蒙版、色彩控制、光效叠加和视觉冲击塑造。"],
+          ["Adobe Illustrator","用于信息图、海岸剖面图、数据符号、图形系统和文字排版。"],
+          ["Midjourney / AI Image","用于蓝眼泪氛围、海岸视觉、生态危机场景和概念图生成。"],
+          ["After Effects","用于海报动态延展、发光效果、粒子流动和短视频展示。"],
+          ["Figma","用于作品集页面结构、海报系列排序和信息层级整理。"],
+          ["Lightroom","用于整体色调统一、蓝色发光氛围和图像质感调整。"]
+        ],
+        steps:[
+          ["议题研究","整理蓝眼泪现象、海水富营养化、生态风险和公众认知误区。"],
+          ["视觉概念设定","确定“美丽 / 危机”的双重叙事，把浪漫景观转化为生态警示。"],
+          ["海报视觉合成","通过图像叠加、蓝色光效、海岸纹理和强对比构建主视觉。"],
+          ["信息图补充","用海岸剖面、数据图形和简化符号解释背后的生态逻辑。"],
+          ["公共传播应用","将海报扩展到展墙、户外广告、社交媒体和教育传播场景。"]
+        ],
+        prompt:`提示词示例：
+blue tears ocean phenomenon poster, beautiful but dangerous marine ecology, glowing blue waves, environmental warning, cinematic coastline, dark ocean texture, abstract data visualization, strong contrast, public welfare poster design, emotional and serious tone
+
+负面提示词：
+tourism advertisement, cute ocean style, cartoon fish, bright happy colors, messy typography, low quality image`
+      }
+    };
+
+    const order = ["project1","project2","project3","project4","project5","project6"];
+
+    function renderWorks(){
+      const root = document.getElementById("worksGrid");
+
+      root.innerHTML = order.map(id=>{
+        const p = projects[id];
+
+        return `
+          <article class="project-card" onclick="openModal('${p.id}')">
+            <div class="project-image">
+              <img src="${p.cover}" alt="${p.title}">
+              <div class="quick">Quick View</div>
             </div>
 
-            <div class="profile-card" id="about">
-                <img src="images/profile.jpg" alt="Profile" class="profile-img">
-                <div class="profile-bio">
-                    <strong>设计专业研究生</strong><br><br>
-                    关注文化转译、视觉叙事、产品系统、数字交互与 AI 辅助设计方法。
-                </div>
+            <div class="project-content">
+              <div class="project-meta">
+                <span>${p.number}</span>
+                <span>${p.category}</span>
+              </div>
+
+              <h3>${p.title}</h3>
+              <p>${p.short}</p>
             </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderWorkflow(p){
+      const w = workflowData[p.id];
+
+      if(!w){
+        return "";
+      }
+
+      return `
+        <section class="workflow-section reveal">
+          <div class="workflow-head">
+            <h2>${w.title}</h2>
+            <p>${w.intro}</p>
+          </div>
+
+          <div class="workflow-grid">
+            <div class="workflow-card">
+              <b>Software Used</b>
+              <div class="software-list">
+                ${w.software.map(item=>`
+                  <div class="software-item">
+                    <strong>${item[0]}</strong>
+                    <span>${item[1]}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+
+            <div class="workflow-card dark">
+              <b>Detailed Workflow</b>
+              <ol class="workflow-steps">
+                ${w.steps.map(item=>`
+                  <li>
+                    <div>
+                      <strong>${item[0]}</strong>
+                      <span>${item[1]}</span>
+                    </div>
+                  </li>
+                `).join("")}
+              </ol>
+            </div>
+          </div>
+
+          <div class="prompt-box">
+            <b>Prompt Reference</b>
+            <pre>${w.prompt}</pre>
+          </div>
+
+          <div class="workflow-note">
+            注：以上软件流程和提示词用于说明作品的设计生成方法与创作逻辑。实际作品集中可以根据最终提交版本进一步调整软件名称、步骤顺序和提示词细节。
+          </div>
+        </section>
+      `;
+    }
+
+    function openModal(id){
+      const p = projects[id];
+      const modal = document.getElementById("projectModal");
+      const sideNav = document.getElementById("sideNav");
+      const content = document.getElementById("caseContent");
+      const thumbs = document.getElementById("thumbStrip");
+
+      modal.style.setProperty("--theme", p.theme);
+
+      sideNav.innerHTML = `
+        <b>Case Menu</b>
+        <a href="#" onclick="scrollCaseTop(event)">Overview</a>
+        ${p.sections.map((s,i)=>`<a href="#case-section-${i}" onclick="jumpToSection(event,'case-section-${i}')">${s.title}</a>`).join("")}
+        <a href="#" onclick="closeModal()">Close</a>
+      `;
+
+      const video = p.video ? `
+        <section class="case-block video-block reveal">
+          <video autoplay muted loop playsinline controls>
+            <source src="${p.video}" type="video/mp4">
+          </video>
+        </section>
+      ` : "";
+
+      const sections = p.sections.map((s,i)=>`
+        <section class="case-section reveal" id="case-section-${i}">
+          <div class="section-title">
+            <h2>${s.title}</h2>
+            <p>${s.desc}</p>
+          </div>
+
+          <div class="media-grid ${s.layout}">
+            ${s.items.map(item=>`
+              <figure class="media-card">
+                <img src="${item[0]}" alt="${s.title}">
+                <figcaption class="caption">
+                  <strong>${s.title}：</strong>${item[1]}
+                </figcaption>
+              </figure>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+
+      content.innerHTML = `
+        <section class="case-hero reveal">
+          <div class="case-hero-img">
+            <img src="${p.hero}" alt="${p.title}">
+          </div>
+
+          <div class="case-hero-copy">
+            <div class="case-num">${p.number} / ${p.meta.join(" · ")}</div>
+            <h1>${p.title}</h1>
+            <p>${p.short}</p>
+
+            <div class="case-tags">
+              ${p.meta.map(t=>`<span>${t}</span>`).join("")}
+            </div>
+          </div>
         </section>
 
-        <div id="works">
-            
-            <section class="portfolio-section">
-                <div class="category-title">01 / IP Character Design</div>
-                <div class="works-grid" style="grid-template-columns: repeat(3, 1fr);">
-                    <div class="project-card" onclick="openModal('project1')">
-                        <div class="card-img-wrap">
-                            <img src="images/project1/cover.jpg" alt="龙宝 IP" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">IP Design / Trendy Toy</div>
-                            <h3 class="card-title">龙 IP 形象设计</h3>
-                            <p class="card-desc">《龙宝 Dragon Boy》是一个以中国龙文化为灵感的原创潮玩 IP 形象设计。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <section class="case-block case-intro reveal">
+          <h2>Project Overview</h2>
 
-            <section class="portfolio-section">
-                <div class="category-title">02 / Packaging Design</div>
-                <div class="works-grid">
-                    <div class="project-card" onclick="openModal('project2')">
-                        <div class="card-img-wrap">
-                            <img src="images/project2/cover.jpg" alt="宁和礼包装" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">Packaging / Agricultural</div>
-                            <h3 class="card-title">宁和礼包装设计</h3>
-                            <p class="card-desc">《宁和礼》农产品礼盒包装设计，结合地方建筑与东方礼赠美学。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                    <div class="project-card" onclick="openModal('project3')">
-                        <div class="card-img-wrap">
-                            <img src="images/project3/cover.jpg" alt="丝绸包装" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">Packaging / Cultural</div>
-                            <h3 class="card-title">丝绸礼盒包装设计</h3>
-                            <p class="card-desc">《触见东方》丝绸礼盒设计，表现丝绸产品的精致感和礼赠属性。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+          <div class="case-intro-main">
+            ${p.intro.map(t=>`<p>${t}</p>`).join("")}
+          </div>
 
-            <section class="portfolio-section">
-                <div class="category-title">03 / Product & Interaction Design</div>
-                <div class="works-grid">
-                    <div class="project-card" onclick="openModal('project4')">
-                        <div class="card-img-wrap">
-                            <img src="images/project4/cover1.jpg" alt="儿童产品" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">Product / System Design</div>
-                            <h3 class="card-title">儿童自然学习产品</h3>
-                            <p class="card-desc">《光芽 Grow Light》面向儿童学习场景的自然学习桌面产品系统设计。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                    <div class="project-card" onclick="openModal('project5')">
-                        <div class="card-img-wrap">
-                            <img src="images/project5/cover.jpg" alt="石窗小程序" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">UI/UX / Mini Program</div>
-                            <h3 class="card-title">石窗小程序设计</h3>
-                            <p class="card-desc">《石窗》文化导览小程序，探索地方文化的数字化传播方式。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+          <aside class="design-note">
+            <b>Viewing Focus</b>
+            <p>
+              这个部分用于帮助观看者快速理解项目重点。请重点关注本项目如何从设计问题出发，
+              通过视觉语言、系统结构和场景应用完成设计表达，而不是单纯观看图片结果。
+            </p>
+          </aside>
+        </section>
 
-            <section class="portfolio-section">
-                <div class="category-title">04 / Visual & Information Design</div>
-                <div class="works-grid" style="grid-template-columns: repeat(3, 1fr);">
-                    <div class="project-card" onclick="openModal('project6')">
-                        <div class="card-img-wrap">
-                            <img src="images/project6/cover1.jpg" alt="海洋海报" class="card-img">
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">Poster / Information</div>
-                            <h3 class="card-title">海洋海报设计</h3>
-                            <p class="card-desc">《蓝色幻象》蓝眼泪生态危机叙事海报设计，探讨自然奇观与生态预醒。</p>
-                            <span class="card-btn">View Project ➝</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-    </div>
-
-    <footer id="contact">
-        <p>© 2026 Designed & Handcrafted. Graduate Design Portfolio.</p>
-    </footer>
-
-    <div id="modal-project1" class="modal">
-        <div class="close-btn" onclick="closeModal('project1')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">IP Design / Character Design / Trendy Toy</div>
-                    <h2 class="modal-title">龙 IP 形象设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《龙宝 Dragon Boy》是一个以中国龙文化为灵感的原创潮玩 IP 形象设计。角色融合 Q 版儿童形象、龙头帽、东方童趣与国潮视觉语言，形成具有亲和力和收藏感的角色系统。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>龙是中国传统文化中的重要符号，象征守护、祥瑞与力量。本项目希望将传统龙文化转译为更年轻、更可爱、更适合潮玩传播的视觉形象。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“东方童趣 × 潮玩收藏 × 吉祥守护”为核心概念，通过角色三视图、表情系统、主题换装和周边应用，构建完整的 IP 视觉系统。</div>
-                </div>
-
-                <div class="video-block">
-                    <video autoplay muted loop playsinline controls>
-                        <source src="videos/ip-demo.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">角色主视觉</h3>
-                    <img src="images/project1/detail1.jpg" alt="detail">
-                    <img src="images/project1/detail2.jpg" alt="detail">
-                    <img src="images/project1/detail3.jpg" alt="detail">
-
-                    <h3 class="project-section-title">角色设定与三视图</h3>
-                    <img src="images/project1/detail4.jpg" alt="detail">
-                    <img src="images/project1/detail5.jpg" alt="detail">
-                    <img src="images/project1/detail6.jpg" alt="detail">
-
-                    <h3 class="project-section-title">造型延展</h3>
-                    <img src="images/project1/detail7.jpg" alt="detail">
-                    <img src="images/project1/detail8.jpg" alt="detail">
-                    <img src="images/project1/detail9.jpg" alt="detail">
-                    <img src="images/project1/detail10.jpg" alt="detail">
-                    <img src="images/project1/detail11.jpg" alt="detail">
-                    <img src="images/project1/detail12.jpg" alt="detail">
-
-                    <h3 class="project-section-title">表情系统</h3>
-                    <img src="images/project1/detail13.jpg" alt="detail">
-                    <img src="images/project1/detail14.jpg" alt="detail">
-
-                    <h3 class="project-section-title">周边应用</h3>
-                    <img src="images/project1/detail15.jpg" alt="detail">
-                    <img src="images/project1/detail16.jpg" alt="detail">
-                    <img src="images/project1/detail17.jpg" alt="detail">
-                    <img src="images/project1/detail18.jpg" alt="detail">
-                    <img src="images/project1/detail19.jpg" alt="detail">
-                    <img src="images/project1/detail20.jpg" alt="detail">
-                </div>
-
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目探索了传统文化符号在当代潮玩语境下的转译方式，使角色既具有文化识别度，又具备年轻化传播和商业延展潜力。
-                </div>
+        <section class="case-block reveal">
+          <div class="guide-grid">
+            <div class="guide-card">
+              <b>Problem</b>
+              <p>${p.guide.problem}</p>
             </div>
-        </div>
-    </div>
 
-    <div id="modal-project2" class="modal">
-        <div class="close-btn" onclick="closeModal('project2')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">Packaging Design / Agricultural Product / Gift Box</div>
-                    <h2 class="modal-title">宁和礼包装设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《宁和礼》是一个以地方农产品为主题的礼盒包装设计项目。包装视觉结合地方建筑、农产品图形、山水线描与东方礼赠美学，形成具有地域文化和礼赠属性的农产品包装系统。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>传统农产品包装常存在视觉同质化、礼品属性不足和地域文化表达较弱的问题。本项目希望通过包装系统提升农产品的品牌感和文化价值。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“地方物产 × 东方礼盒 × 线描叙事”为核心概念，将建筑、山水、农产品和礼赠场景融入包装视觉，增强产品的识别度和仪式感。</div>
-                </div>
-
-                <div class="video-block">
-                    <video autoplay muted loop playsinline controls>
-                        <source src="videos/shichuang-demo.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">礼盒主视觉</h3>
-                    <img src="images/project2/detail1.jpg" alt="detail">
-                    <img src="images/project2/detail2.jpg" alt="detail">
-
-                    <h3 class="project-section-title">礼盒结构与开盒</h3>
-                    <img src="images/project2/detail3.jpg" alt="detail">
-                    <img src="images/project2/detail4.jpg" alt="detail">
-
-                    <h3 class="project-section-title">内盒包装</h3>
-                    <img src="images/project2/detail5.jpg" alt="detail">
-                    <img src="images/project2/detail6.jpg" alt="detail">
-
-                    <h3 class="project-section-title">系列展示与应用</h3>
-                    <img src="images/project2/detail7.jpg" alt="detail">
-                    <img src="images/project2/detail8.jpg" alt="detail">
-                    <img src="images/project2/detail9.jpg" alt="detail">
-                </div>
-
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目通过礼盒结构、系列内盒和视觉插画系统，建立了具有东方气质和地方文化表达的农产品礼盒包装方案。
-                </div>
+            <div class="guide-card">
+              <b>Method</b>
+              <p>${p.guide.method}</p>
             </div>
-        </div>
-    </div>
 
-    <div id="modal-project3" class="modal">
-        <div class="close-btn" onclick="closeModal('project3')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">Packaging Design / Cultural Product / Gift Box</div>
-                    <h2 class="modal-title">丝绸礼盒包装设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《触见东方》是一个以东方丝绸文化为主题的高端礼盒包装设计。作品通过柔和米白、浅金、织物纹理、山水线条与开盒结构，表现丝绸产品的精致感和礼赠属性。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>丝绸产品具有柔软、细腻和东方文化意味，但包装展示中常缺少触感、仪式感和空间层次。本项目希望通过礼盒结构与材质语言强化产品体验。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“触见东方”为核心概念，将东方山水、织物肌理和礼盒开合体验结合，营造柔和、安静、精致的视觉与触觉感受。</div>
-                </div>
-
-                <div class="video-block">
-                    <video autoplay muted loop playsinline controls>
-                        <source src="videos/sichou-demo.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">礼盒主视觉</h3>
-                    <img src="images/project3/detail1.jpg" alt="detail">
-                    <img src="images/project3/detail2.jpg" alt="detail">
-
-                    <h3 class="project-section-title">开盒展示</h3>
-                    <img src="images/project3/detail3.jpg" alt="detail">
-                    <img src="images/project3/detail4.jpg" alt="detail">
-                    <img src="images/project3/detail5.jpg" alt="detail">
-
-                    <h3 class="project-section-title">材质与细节</h3>
-                    <img src="images/project3/detail6.jpg" alt="detail">
-                    <img src="images/project3/detail7.jpg" alt="detail">
-                    <img src="images/project3/detail8.jpg" alt="detail">
-
-                    <h3 class="project-section-title">丝绸陈列</h3>
-                    <img src="images/project3/detail9.jpg" alt="detail">
-                    <img src="images/project3/detail10.jpg" alt="detail">
-                    <img src="images/project3/detail11.jpg" alt="detail">
-
-                    <h3 class="project-section-title">品牌延展</h3>
-                    <img src="images/project3/detail12.jpg" alt="detail">
-                    <img src="images/project3/detail13.jpg" alt="detail">
-                    <img src="images/project3/detail14.jpg" alt="detail">
-                    <img src="images/project3/detail15.jpg" alt="detail">
-                </div>
-
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目通过包装结构、内部陈列和品牌延展，构建了具有东方美学和高端礼赠感的丝绸包装系统。
-                </div>
+            <div class="guide-card">
+              <b>Output</b>
+              <p>${p.guide.output}</p>
             </div>
+          </div>
+        </section>
+
+        ${video}
+
+        ${sections}
+
+        ${renderWorkflow(p)}
+
+        <section class="case-summary reveal">
+          <h2>Reflection</h2>
+          <p>${p.summary}</p>
+        </section>
+
+        <div class="case-actions reveal">
+          <button onclick="scrollCaseTop(event)">Back To Top</button>
+          <button class="secondary" onclick="openNextProject('${p.id}')">Next Project</button>
+          <button class="secondary" onclick="closeModal()">Close</button>
         </div>
-    </div>
+      `;
 
-    <div id="modal-project4" class="modal">
-        <div class="close-btn" onclick="closeModal('project4')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">Product Design / System Design / Children Product</div>
-                    <h2 class="modal-title">儿童自然学习桌面产品设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《光芽 Grow Light》是一个面向儿童学习场景的自然学习桌面产品系统设计，包括植物加湿器、儿童学习护眼台灯和智能植物学习钟。项目通过空气湿度、护眼照明、时间管理与植物陪伴，为儿童创造健康、温暖、自然的学习环境。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>儿童学习桌面常面临光照不舒适、空气干燥、专注时间难管理和学习氛围单一等问题。本项目希望通过一组三件式桌面产品，构建更完整的自然学习陪伴系统。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“自然陪伴 × 健康学习 × 儿童友好”为核心概念，三件产品分别承担空气调节、护眼照明和专注管理功能，并通过统一的造型、色彩和交互语言形成系列感。</div>
-                </div>
+      const allImages = [p.hero];
+      p.sections.forEach(s => s.items.forEach(item => allImages.push(item[0])));
 
-                <div class="video-block">
-                    <video autoplay muted loop playsinline controls>
-                        <source src="videos/chanping-demo.mp4" type="video/mp4">
-                    </video>
-                </div>
+      thumbs.innerHTML = allImages.slice(0,30).map((src,i)=>`
+        <button onclick="jumpToImage(${i})">
+          <img src="${src}" alt="thumbnail">
+        </button>
+      `).join("");
 
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">系列主视觉</h3>
-                    <img src="images/project4/cover2.jpg" alt="detail">
-                    <img src="images/project4/detail1.jpg" alt="detail">
-                    <img src="images/project4/detail2.jpg" alt="detail">
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      modal.scrollTop = 0;
+      setTimeout(observeReveal,60);
+    }
 
-                    <h3 class="project-section-title">三件产品系列总览</h3>
-                    <img src="images/project4/detail3.jpg" alt="detail">
-                    <img src="images/project4/detail4.jpg" alt="detail">
-                    <img src="images/project4/detail5.jpg" alt="detail">
+    function closeModal(){
+      document.getElementById("projectModal").classList.remove("open");
+      document.body.style.overflow = "auto";
+    }
 
-                    <h3 class="project-section-title">植物加湿器</h3>
-                    <img src="images/project4/detail6.jpg" alt="detail">
-                    <img src="images/project4/detail7.jpg" alt="detail">
-                    <img src="images/project4/detail8.jpg" alt="detail">
-                    <img src="images/project4/detail9.jpg" alt="detail">
+    function scrollCaseTop(event){
+      if(event) event.preventDefault();
 
-                    <h3 class="project-section-title">儿童护眼台灯</h3>
-                    <img src="images/project4/detail10.jpg" alt="detail">
-                    <img src="images/project4/detail11.jpg" alt="detail">
-                    <img src="images/project4/detail12.jpg" alt="detail">
-                    <img src="images/project4/detail13.jpg" alt="detail">
+      document.getElementById("projectModal").scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+    }
 
-                    <h3 class="project-section-title">智能植物学习钟</h3>
-                    <img src="images/project4/detail14.jpg" alt="detail">
-                    <img src="images/project4/detail15.jpg" alt="detail">
-                    <img src="images/project4/detail16.jpg" alt="detail">
-                    <img src="images/project4/detail17.jpg" alt="detail">
+    function jumpToSection(event,id){
+      event.preventDefault();
 
-                    <h3 class="project-section-title">结构与功能</h3>
-                    <img src="images/project4/detail18.jpg" alt="detail">
-                    <img src="images/project4/detail19.jpg" alt="detail">
-                    <img src="images/project4/detail20.jpg" alt="detail">
-                    <img src="images/project4/detail21.jpg" alt="detail">
+      const modal = document.getElementById("projectModal");
+      const target = document.getElementById(id);
 
-                    <h3 class="project-section-title">系统关系 / CMF / 交互</h3>
-                    <img src="images/project4/detail22.jpg" alt="detail">
-                    <img src="images/project4/detail23.jpg" alt="detail">
-                    <img src="images/project4/detail24.jpg" alt="detail">
+      if(!target) return;
 
-                    <h3 class="project-section-title">场景与品牌延展</h3>
-                    <img src="images/project4/detail25.jpg" alt="detail">
-                    <img src="images/project4/detail26.jpg" alt="detail">
-                </div>
+      const modalTop = modal.getBoundingClientRect().top;
+      const targetTop = target.getBoundingClientRect().top;
 
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目强调系统化产品设计，而不是将多个功能堆叠在一个产品中。通过统一的 CMF、圆角语言和场景化展示，形成具有现实可行性的儿童学习桌面产品系列。
-                </div>
-            </div>
-        </div>
-    </div>
+      modal.scrollTo({
+        top:modal.scrollTop + targetTop - modalTop - 90,
+        behavior:"smooth"
+      });
+    }
 
-    <div id="modal-project5" class="modal">
-        <div class="close-btn" onclick="closeModal('project5')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">UI/UX Design / Mini Program / Cultural Digital Design</div>
-                    <h2 class="modal-title">石窗小程序设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《石窗》是一个围绕地方石窗文化展开的文化导览小程序设计。项目通过移动端界面呈现石窗文化、建筑细节、路线导览和互动浏览体验，探索地方文化的数字化传播方式。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>地方传统建筑与石窗文化具有独特的审美和历史价值，但在大众传播中常缺少易理解、易浏览、易参与的数字化入口。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“文化导览 × 图文叙事 × 移动交互”为核心概念，通过首页、文化介绍、详情页面、路线浏览和视觉规范，构建完整的小程序体验流程。</div>
-                </div>
+    function jumpToImage(index){
+      const modal = document.getElementById("projectModal");
+      const imgs = modal.querySelectorAll(".case-hero-img img, .media-card img");
+      const target = imgs[index];
 
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">项目概念与首页</h3>
-                    <img src="images/project5/detail1.jpg" alt="detail">
-                    <img src="images/project5/detail2.jpg" alt="detail">
-                    <img src="images/project5/detail3.jpg" alt="detail">
+      if(!target) return;
 
-                    <h3 class="project-section-title">功能架构与用户流程</h3>
-                    <img src="images/project5/detail4.jpg" alt="detail">
-                    <img src="images/project5/detail5.jpg" alt="detail">
-                    <img src="images/project5/detail6.jpg" alt="detail">
+      const modalTop = modal.getBoundingClientRect().top;
+      const targetTop = target.getBoundingClientRect().top;
 
-                    <h3 class="project-section-title">核心页面 UI</h3>
-                    <img src="images/project5/detail7.jpg" alt="detail">
-                    <img src="images/project5/detail8.jpg" alt="detail">
-                    <img src="images/project5/detail9.jpg" alt="detail">
-                    <img src="images/project5/detail10.jpg" alt="detail">
+      modal.scrollTo({
+        top:modal.scrollTop + targetTop - modalTop - 120,
+        behavior:"smooth"
+      });
+    }
 
-                    <h3 class="project-section-title">页面交互流程</h3>
-                    <img src="images/project5/detail11.jpg" alt="detail">
-                    <img src="images/project5/detail12.jpg" alt="detail">
-                    <img src="images/project5/detail13.jpg" alt="detail">
+    function openNextProject(currentId){
+      const idx = order.indexOf(currentId);
+      openModal(order[(idx+1)%order.length]);
+    }
 
-                    <h3 class="project-section-title">视觉规范与样机展示</h3>
-                    <img src="images/project5/detail14.jpg" alt="detail">
-                    <img src="images/project5/detail15.jpg" alt="detail">
-                    <img src="images/project5/detail16.jpg" alt="detail">
-                    <img src="images/project5/detail17.jpg" alt="detail">
-                </div>
+    function observeReveal(){
+      const roots = [document, document.getElementById("projectModal")];
 
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目将传统文化内容转化为移动端交互体验，使用户能够以更轻量、更直观的方式了解石窗文化。
-                </div>
-            </div>
-        </div>
-    </div>
+      roots.forEach(rootDoc=>{
+        const root = rootDoc === document ? null : rootDoc;
+        const items = (rootDoc === document ? document : rootDoc).querySelectorAll(".reveal:not(.visible)");
 
-    <div id="modal-project6" class="modal">
-        <div class="close-btn" onclick="closeModal('project6')">×</div>
-        <div class="modal-container">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="project-meta">Poster Design / Information Design / Environmental Visual Design</div>
-                    <h2 class="modal-title">海洋海报设计</h2>
-                </div>
-                
-                <div class="project-intro">
-                    <div class="intro-block"><strong>项目简介：</strong>《蓝色幻象 The Blue Illusion》是一个以“蓝眼泪”现象为切入点的生态议题海报设计项目。项目围绕“美丽 / 危机”的双重面孔展开，通过视觉叙事和信息设计，呈现蓝眼泪从浪漫自然奇观到海岸生态警讯的认知转变。</div>
-                    <div class="intro-block"><strong>设计背景：</strong>蓝眼泪常被大众作为浪漫景观观看和传播，但其背后也可能关联海水富营养化、藻类异常繁殖、溶解氧下降和生态系统失衡等问题。</div>
-                    <div class="intro-block"><strong>设计概念：</strong>以“你看到的是奇观，海洋发出的是警讯”为核心叙事，将蓝眼泪的梦幻视觉与海岸生态危机并置，形成美丽与危机的对照关系。</div>
-                </div>
-
-                <div class="modal-gallery">
-                    <h3 class="project-section-title">项目封面</h3>
-                    <img src="images/project6/cover2.jpg" alt="detail">
-                    <img src="images/project6/detail1.jpg" alt="detail">
-                    <img src="images/project6/detail2.jpg" alt="detail">
-
-                    <h3 class="project-section-title">美丽 / 危机概念</h3>
-                    <img src="images/project6/detail3.jpg" alt="detail">
-                    <img src="images/project6/detail4.jpg" alt="detail">
-
-                    <h3 class="project-section-title">海岸剖面信息图</h3>
-                    <img src="images/project6/detail5.jpg" alt="detail">
-                    <img src="images/project6/detail6.jpg" alt="detail">
-                    <img src="images/project6/detail7.jpg" alt="detail">
-
-                    <h3 class="project-section-title">系列海报</h3>
-                    <img src="images/project6/detail8.jpg" alt="detail">
-                    <img src="images/project6/detail9.jpg" alt="detail">
-                    <img src="images/project6/detail10.jpg" alt="detail">
-
-                    <h3 class="project-section-title">应用展示</h3>
-                    <img src="images/project6/detail11.jpg" alt="detail">
-                    <img src="images/project6/detail12.jpg" alt="detail">
-                </div>
-
-                <div class="project-summary">
-                    <strong>项目总结：</strong>该项目通过公益海报、视觉隐喻和信息可视化语言，引导观者从观看自然奇观转向理解海洋生态问题与修复行动。
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openModal(projectId) {
-            document.getElementById('modal-' + projectId).style.display = "block";
-            document.body.style.overflow = "hidden"; // 展开详情时禁止底背滑动
-        }
-        function closeModal(projectId) {
-            document.getElementById('modal-' + projectId).style.display = "none";
-            document.body.style.overflow = "auto";   // 关闭后恢复滚动
-        }
-        // 点击遮罩外部也可以关闭弹窗
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = "none";
-                document.body.style.overflow = "auto";
+        const observer = new IntersectionObserver(entries=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
             }
-        }
-    </script>
+          });
+        },{root,threshold:.08});
+
+        items.forEach(item=>observer.observe(item));
+      });
+    }
+
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+
+    let mouseX=0;
+    let mouseY=0;
+    let ringX=0;
+    let ringY=0;
+
+    window.addEventListener("mousemove", e=>{
+      mouseX=e.clientX;
+      mouseY=e.clientY;
+      dot.style.left = mouseX + "px";
+      dot.style.top = mouseY + "px";
+    });
+
+    function animateCursor(){
+      ringX += (mouseX - ringX) * .16;
+      ringY += (mouseY - ringY) * .16;
+      ring.style.left = ringX + "px";
+      ring.style.top = ringY + "px";
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    document.addEventListener("mouseover", e=>{
+      if(e.target.closest("a,button,.project-card,.method-card,.media-card,.profile-card")){
+        document.body.classList.add("cursor-hover");
+      }
+    });
+
+    document.addEventListener("mouseout", e=>{
+      if(e.target.closest("a,button,.project-card,.method-card,.media-card,.profile-card")){
+        document.body.classList.remove("cursor-hover");
+      }
+    });
+
+    window.addEventListener("keydown", e=>{
+      if(e.key === "Escape") closeModal();
+    });
+
+    window.onclick = function(event){
+      const modal = document.getElementById("projectModal");
+
+      if(event.target === modal){
+        closeModal();
+      }
+    };
+
+    renderWorks();
+    observeReveal();
+  </script>
 </body>
 </html>
